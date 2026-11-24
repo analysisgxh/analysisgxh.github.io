@@ -28,6 +28,27 @@ latest_posts:
 ---
 
 
+<style>
+  .post-header .post-title,
+  .post-header .post-title span {
+    font-size: 0 !important;
+    line-height: 0 !important;
+  }
+  .post-header .post-title {
+    margin-bottom: 0.6rem;
+  }
+  .post-header .post-title::after {
+    content: "";
+    display: inline-block;
+    width: min(268px, 80vw);
+    aspect-ratio: 362 / 81;
+    background: url("{{ '/assets/img/signature.png' | relative_url }}") no-repeat left center / contain;
+  }
+  html[data-theme="dark"] .post-header .post-title::after {
+    filter: invert(1);
+  }
+</style>
+
 NOTHING
 
 {% comment %}

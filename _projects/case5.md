@@ -306,25 +306,86 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
   温度场演化视频（0 → 1.5 s）。
 </div>
 
-### 7.5 光学流场可视化（纹影 / 阴影 / 干涉图）
+### 7.5 数值纹影（Schlieren，垂直刀口）
 
 <div class="row">
   <div class="col-sm-4 mt-3 mt-md-0">
-    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls>
+    {% include figure.liquid path="assets/img/case5/schlieren/plt07128.png" title="数值纹影 plt07128 (t = 1460.19 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/schlieren/plt07226.png" title="数值纹影 plt07226 (t = 1480.19 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/schlieren/plt07323.png" title="数值纹影 plt07323 (t = 1500.00 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+</div>
+<div class="caption">
+  数值纹影（沿 <i>z</i> 向视线积分，垂直刀口）关键帧对比（从左至右：<code>plt07128</code> / <code>t = 1460.19 ms</code>、<code>plt07226</code> / <code>1480.19 ms</code>、<code>plt07323</code> / <code>1500.00 ms</code>）。
+</div>
+
+<div class="row justify-content-sm-center mt-3">
+  <div class="col-sm-8">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls poster="{{ '/assets/img/case5/schlieren/plt07323.png' | relative_url }}">
       <source src="{{ '/assets/video/case5/movie_schlieren.mp4' | relative_url }}" type="video/mp4">
     </video>
   </div>
+</div>
+<div class="caption">
+  数值纹影动态演化视频（自动循环播放，支持暂停与进度拖动）。
+</div>
+
+### 7.6 数值阴影（Shadowgraph）
+
+<div class="row">
   <div class="col-sm-4 mt-3 mt-md-0">
-    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls>
+    {% include figure.liquid path="assets/img/case5/shadowgraph/plt07128.png" title="数值阴影 plt07128 (t = 1460.19 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/shadowgraph/plt07226.png" title="数值阴影 plt07226 (t = 1480.19 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/shadowgraph/plt07323.png" title="数值阴影 plt07323 (t = 1500.00 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+</div>
+<div class="caption">
+  数值阴影（密度二阶导数视线积分）关键帧对比（从左至右：<code>plt07128</code> / <code>t = 1460.19 ms</code>、<code>plt07226</code> / <code>1480.19 ms</code>、<code>plt07323</code> / <code>1500.00 ms</code>）。
+</div>
+
+<div class="row justify-content-sm-center mt-3">
+  <div class="col-sm-8">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls poster="{{ '/assets/img/case5/shadowgraph/plt07323.png' | relative_url }}">
       <source src="{{ '/assets/video/case5/movie_shadowgraph.mp4' | relative_url }}" type="video/mp4">
     </video>
   </div>
+</div>
+<div class="caption">
+  数值阴影动态演化视频（自动循环播放，支持暂停与进度拖动）。
+</div>
+
+### 7.7 数值干涉（Interferogram，无限条纹）
+
+<div class="row">
   <div class="col-sm-4 mt-3 mt-md-0">
-    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls>
+    {% include figure.liquid path="assets/img/case5/interferogram/plt07128.png" title="数值干涉 plt07128 (t = 1460.19 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/interferogram/plt07226.png" title="数值干涉 plt07226 (t = 1480.19 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/interferogram/plt07323.png" title="数值干涉 plt07323 (t = 1500.00 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+</div>
+<div class="caption">
+  数值干涉（无限条纹，&lambda; = 5820 nm 缩放）关键帧对比（从左至右：<code>plt07128</code> / <code>t = 1460.19 ms</code>、<code>plt07226</code> / <code>1480.19 ms</code>、<code>plt07323</code> / <code>1500.00 ms</code>）。
+</div>
+
+<div class="row justify-content-sm-center mt-3">
+  <div class="col-sm-8">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls poster="{{ '/assets/img/case5/interferogram/plt07323.png' | relative_url }}">
       <source src="{{ '/assets/video/case5/movie_interferogram.mp4' | relative_url }}" type="video/mp4">
     </video>
   </div>
 </div>
 <div class="caption">
-  光学风格流场动态可视化并列对比（从左至右：数值纹影 Schlieren、数值阴影 Shadowgraph、数值干涉 Interferogram）。
+  数值干涉动态演化视频（自动循环播放，支持暂停与进度拖动）。
 </div>
