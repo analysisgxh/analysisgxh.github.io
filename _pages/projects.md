@@ -10,6 +10,31 @@ horizontal: false
 ---
 
 <!-- pages/projects.md -->
+<style>
+  .projects .card figure {
+    margin-bottom: 0;
+  }
+  .projects .card .card-img-top {
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+  .projects .card .card-body {
+    padding: 0.9rem 1.05rem;
+  }
+  .projects .card .card-title {
+    font-size: 1.05rem;
+    line-height: 1.35;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .projects .card .card-text {
+    font-size: 0.82rem;
+    line-height: 1.48;
+    white-space: normal;
+    opacity: 0.85;
+    margin-bottom: 0;
+  }
+</style>
 <div class="projects">
 {% if site.enable_project_categories and page.display_categories %}
   <!-- Display categorized projects -->

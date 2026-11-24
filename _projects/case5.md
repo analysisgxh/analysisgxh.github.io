@@ -1,8 +1,8 @@
 ---
 layout: page
-title: "Case 5: 火箭 1 km / Ma 0.3 GPU 气动仿真"
-description: 60° 气动舵面（model_v1_60.stl）AMReX-CNS GPU 算例运行方案、AMR 网格加密策略与初始流场模式整理
-img: assets/img/case5/summary/plt07323.png
+title: "Case 5: 火箭 1 km / Ma 0.3 GPU 仿真"
+description: 60° 舵面 AMReX-CNS 气动仿真、AMR 加密策略与 1.5 s 全流场演化展示
+img: assets/img/case5/cover.png
 importance: 0
 category: work
 pretty_table: true
@@ -213,7 +213,7 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
 
 <div class="row justify-content-sm-center mt-3">
   <div class="col-sm-12">
-    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="metadata" poster="{{ '/assets/img/case5/summary/plt07323.png' | relative_url }}">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="none" poster="{{ '/assets/img/case5/summary/plt07323.png' | relative_url }}">
       <source src="{{ '/assets/video/case5/movie_summary_frames_zoom.mp4' | relative_url }}" type="video/mp4">
     </video>
   </div>
@@ -241,7 +241,7 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
 
 <div class="row justify-content-sm-center mt-3">
   <div class="col-sm-8">
-    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="metadata" poster="{{ '/assets/img/case5/mach/plt07323.png' | relative_url }}">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="none" poster="{{ '/assets/img/case5/mach/plt07323.png' | relative_url }}">
       <source src="{{ '/assets/video/case5/movie_mach.mp4' | relative_url }}" type="video/mp4">
     </video>
   </div>
@@ -269,7 +269,7 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
 
 <div class="row justify-content-sm-center mt-3">
   <div class="col-sm-8">
-    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="metadata" poster="{{ '/assets/img/case5/pressure/plt07323.png' | relative_url }}">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="none" poster="{{ '/assets/img/case5/pressure/plt07323.png' | relative_url }}">
       <source src="{{ '/assets/video/case5/movie_pressure.mp4' | relative_url }}" type="video/mp4">
     </video>
   </div>
@@ -297,7 +297,7 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
 
 <div class="row justify-content-sm-center mt-3">
   <div class="col-sm-8">
-    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="metadata" poster="{{ '/assets/img/case5/temperature/plt07323.png' | relative_url }}">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="none" poster="{{ '/assets/img/case5/temperature/plt07323.png' | relative_url }}">
       <source src="{{ '/assets/video/case5/movie_temperature.mp4' | relative_url }}" type="video/mp4">
     </video>
   </div>
@@ -325,13 +325,13 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
 
 <div class="row justify-content-sm-center mt-3">
   <div class="col-sm-8">
-    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls poster="{{ '/assets/img/case5/schlieren/plt07323.png' | relative_url }}">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="none" poster="{{ '/assets/img/case5/schlieren/plt07323.png' | relative_url }}">
       <source src="{{ '/assets/video/case5/movie_schlieren.mp4' | relative_url }}" type="video/mp4">
     </video>
   </div>
 </div>
 <div class="caption">
-  数值纹影动态演化视频（自动循环播放，支持暂停与进度拖动）。
+  数值纹影动态演化视频（点击播放，循环演示并支持暂停与进度拖动）。
 </div>
 
 ### 7.6 数值阴影（Shadowgraph）
@@ -353,13 +353,13 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
 
 <div class="row justify-content-sm-center mt-3">
   <div class="col-sm-8">
-    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls poster="{{ '/assets/img/case5/shadowgraph/plt07323.png' | relative_url }}">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="none" poster="{{ '/assets/img/case5/shadowgraph/plt07323.png' | relative_url }}">
       <source src="{{ '/assets/video/case5/movie_shadowgraph.mp4' | relative_url }}" type="video/mp4">
     </video>
   </div>
 </div>
 <div class="caption">
-  数值阴影动态演化视频（自动循环播放，支持暂停与进度拖动）。
+  数值阴影动态演化视频（点击播放，循环演示并支持暂停与进度拖动）。
 </div>
 
 ### 7.7 数值干涉（Interferogram，无限条纹）
@@ -381,11 +381,32 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
 
 <div class="row justify-content-sm-center mt-3">
   <div class="col-sm-8">
-    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls poster="{{ '/assets/img/case5/interferogram/plt07323.png' | relative_url }}">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="none" poster="{{ '/assets/img/case5/interferogram/plt07323.png' | relative_url }}">
       <source src="{{ '/assets/video/case5/movie_interferogram.mp4' | relative_url }}" type="video/mp4">
     </video>
   </div>
 </div>
 <div class="caption">
-  数值干涉动态演化视频（自动循环播放，支持暂停与进度拖动）。
+  数值干涉动态演化视频（点击播放，循环演示并支持暂停与进度拖动）。
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const videos = Array.from(document.querySelectorAll("video"));
+    videos.forEach((v) => {
+      v.addEventListener("play", () => {
+        videos.forEach((other) => {
+          if (other !== v && !other.paused) other.pause();
+        });
+      });
+    });
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting && !e.target.paused) e.target.pause();
+        });
+      }, { threshold: 0.1 });
+      videos.forEach((v) => io.observe(v));
+    }
+  });
+</script>
