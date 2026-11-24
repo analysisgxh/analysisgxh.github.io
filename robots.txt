@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://analysisgxh.github.io# the base hostname & protocol for your site/sitemap.xml
