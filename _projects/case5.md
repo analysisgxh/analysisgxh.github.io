@@ -2,7 +2,7 @@
 layout: page
 title: "Case 5: 火箭 1 km / Ma 0.3 GPU 气动仿真"
 description: 60° 气动舵面（model_v1_60.stl）AMReX-CNS GPU 算例运行方案、AMR 网格加密策略与初始流场模式整理
-img: assets/img/case5_stl_views.png
+img: assets/img/case5/summary/plt07323.png
 importance: 0
 category: work
 pretty_table: true
@@ -179,3 +179,152 @@ cns.refine_shock_start   = 2.5e-3
 python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
   --zoom 0.8 -o results/case5_1km_M03_f60_gpu_success60_full/summary_zoom.png
 ```
+
+---
+
+## 七、算例结果展示（1.5 s 完整仿真结果）
+
+完整 1.5 s GPU 仿真（最细网格 `dx = 4 cm`）在约 `t = 0.4 s` 后进入准定常旋涡脱落阶段，末 25% 时段主要气动统计指标如下（下方所有流场图均支持**点击放大**，视频支持**拖动进度条与暂停**以便组会讲解）：
+
+| 关键指标 | 数值结果（`t = 1.500 s`） |
+| :--- | :--- |
+| 稳态平均阻力系数 $$ C_d $$（末 25% 时段） | **1.457** |
+| 阻力系数脉动幅值（`Cd swing`） | **0.190**（箭体与舵面尾流非定常旋涡脱落） |
+| 流场最大马赫数 `max Mach` | **0.38** |
+| 流场最高温度 `max T` | **290 K**（来流 281 K） |
+| 流场最大压比 `max p / p_inf` | **1.1** |
+
+### 7.1 综合总览（马赫数 / 压力 / 温度 + $$ C_d $$ 历史曲线）
+
+<div class="row">
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/summary/plt07313.png" title="综合总览 plt07313 (t = 1.498 s)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/summary/plt07318.png" title="综合总览 plt07318 (t = 1.499 s)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/summary/plt07323.png" title="综合总览 plt07323 (t = 1.500 s)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+</div>
+<div class="caption">
+  综合流场与阻力系数曲线关键帧对比（从左至右：<code>plt07313</code> / <code>t = 1.498 s</code>、<code>plt07318</code> / <code>t = 1.499 s</code>、<code>plt07323</code> / <code>t = 1.500 s</code>）。
+</div>
+
+<div class="row justify-content-sm-center mt-3">
+  <div class="col-sm-12">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="metadata" poster="{{ '/assets/img/case5/summary/plt07323.png' | relative_url }}">
+      <source src="{{ '/assets/video/case5/movie_summary_frames_zoom.mp4' | relative_url }}" type="video/mp4">
+    </video>
+  </div>
+</div>
+<div class="caption">
+  Case 5 综合流场（马赫数、无量纲压力、温度与 <i>C<sub>d</sub></i> 时历曲线）0 → 1.5 s 全过程演化视频。
+</div>
+
+### 7.2 马赫数流场（Mach Number）
+
+<div class="row">
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/mach/plt07313.png" title="马赫数流场 plt07313 (t = 1498.03 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/mach/plt07318.png" title="马赫数流场 plt07318 (t = 1499.06 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/mach/plt07323.png" title="马赫数流场 plt07323 (t = 1500.00 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+</div>
+<div class="caption">
+  马赫数分布关键帧对比（从左至右：<code>t = 1498.03 ms</code>、<code>1499.06 ms</code>、<code>1500.00 ms</code>）。
+</div>
+
+<div class="row justify-content-sm-center mt-3">
+  <div class="col-sm-8">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="metadata" poster="{{ '/assets/img/case5/mach/plt07323.png' | relative_url }}">
+      <source src="{{ '/assets/video/case5/movie_mach.mp4' | relative_url }}" type="video/mp4">
+    </video>
+  </div>
+</div>
+<div class="caption">
+  马赫数流场与 <i>C<sub>d</sub></i> 同步演化视频（0 → 1.5 s）。
+</div>
+
+### 7.3 压力流场（Pressure, $$ p / p_\infty $$）
+
+<div class="row">
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/pressure/plt07313.png" title="压力流场 plt07313 (t = 1498.03 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/pressure/plt07318.png" title="压力流场 plt07318 (t = 1499.06 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/pressure/plt07323.png" title="压力流场 plt07323 (t = 1500.00 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+</div>
+<div class="caption">
+  无量纲静压 <i>p / p<sub>&infin;</sub></i> 分布关键帧对比（从左至右：<code>t = 1498.03 ms</code>、<code>1499.06 ms</code>、<code>1500.00 ms</code>），头部滞止区与 60° 舵面迎风侧高压区清晰可见。
+</div>
+
+<div class="row justify-content-sm-center mt-3">
+  <div class="col-sm-8">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="metadata" poster="{{ '/assets/img/case5/pressure/plt07323.png' | relative_url }}">
+      <source src="{{ '/assets/video/case5/movie_pressure.mp4' | relative_url }}" type="video/mp4">
+    </video>
+  </div>
+</div>
+<div class="caption">
+  无量纲静压 <i>p / p<sub>&infin;</sub></i> 演化视频（0 → 1.5 s）。
+</div>
+
+### 7.4 温度流场（Temperature, K）
+
+<div class="row">
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/temperature/plt07313.png" title="温度流场 plt07313 (t = 1498.03 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/temperature/plt07318.png" title="温度流场 plt07318 (t = 1499.06 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid path="assets/img/case5/temperature/plt07323.png" title="温度流场 plt07323 (t = 1500.00 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+  </div>
+</div>
+<div class="caption">
+  静温分布关键帧对比（从左至右：<code>t = 1498.03 ms</code>、<code>1499.06 ms</code>、<code>1500.00 ms</code>）。
+</div>
+
+<div class="row justify-content-sm-center mt-3">
+  <div class="col-sm-8">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls loop muted playsinline preload="metadata" poster="{{ '/assets/img/case5/temperature/plt07323.png' | relative_url }}">
+      <source src="{{ '/assets/video/case5/movie_temperature.mp4' | relative_url }}" type="video/mp4">
+    </video>
+  </div>
+</div>
+<div class="caption">
+  温度场演化视频（0 → 1.5 s）。
+</div>
+
+### 7.5 光学流场可视化（纹影 / 阴影 / 干涉图）
+
+<div class="row">
+  <div class="col-sm-4 mt-3 mt-md-0">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls>
+      <source src="{{ '/assets/video/case5/movie_schlieren.mp4' | relative_url }}" type="video/mp4">
+    </video>
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls>
+      <source src="{{ '/assets/video/case5/movie_shadowgraph.mp4' | relative_url }}" type="video/mp4">
+    </video>
+  </div>
+  <div class="col-sm-4 mt-3 mt-md-0">
+    <video class="img-fluid rounded z-depth-1" style="width: 100%;" autoplay loop muted playsinline controls>
+      <source src="{{ '/assets/video/case5/movie_interferogram.mp4' | relative_url }}" type="video/mp4">
+    </video>
+  </div>
+</div>
+<div class="caption">
+  光学风格流场动态可视化并列对比（从左至右：数值纹影 Schlieren、数值阴影 Shadowgraph、数值干涉 Interferogram）。
+</div>
