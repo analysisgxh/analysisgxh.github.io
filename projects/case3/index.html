@@ -1,0 +1,725 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Case 3: 火箭 30 km / Ma 5 GPU 仿真 | xh g </title> <meta name="author" content="xh g"> <meta name="description" content="60° 舵面高超声速流场仿真、AMR 显存诊断调优（inputs2 → inputs3）与激波演化展示"> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://analysisgxh.github.io/projects/case3/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">xh</span> g </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item active"> <a class="nav-link" href="/projects/">projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/teaching/">teaching </a> </li> <li class="nav-item "> <a class="nav-link" href="/people/">people </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-nav-dropdown-toggle="true" aria-haspopup="true" aria-expanded="false">submenus </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/books/">bookshelf</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/blog/">blog</a> </div> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Case 3: 火箭 30 km / Ma 5 GPU 仿真</h1> <p class="post-description">60° 舵面高超声速流场仿真、AMR 显存诊断调优（inputs2 → inputs3）与激波演化展示</p> </header> <article> <style>
+  .cfg-grid {
+    margin-top: 0.75rem;
+  }
+  .cfg-col {
+    margin-bottom: 1rem;
+  }
+  .cfg-card {
+    height: 100%;
+    padding: 1rem 1.15rem;
+    border-radius: 10px;
+    background: rgba(127, 127, 127, 0.07);
+    border: 1px solid rgba(127, 127, 127, 0.22);
+  }
+  .cfg-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0.55rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(127, 127, 127, 0.2);
+  }
+  .cfg-card ul {
+    padding-left: 1.15rem;
+    margin-bottom: 0;
+    font-size: 0.88rem;
+    line-height: 1.58;
+  }
+  .cfg-card li {
+    margin-bottom: 0.28rem;
+  }
+  .cfg-card p {
+    font-size: 0.88rem;
+    line-height: 1.58;
+    margin-bottom: 0.45rem;
+  }
+  .cfg-card pre {
+    margin-top: 0.45rem;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+  }
+  .cfg-card-warn {
+    border-left: 4px solid #e05252;
+  }
+  .cfg-card-ok {
+    border-left: 4px solid #2ea043;
+  }
+</style> <p>本页整理自火箭气动数值模拟项目 <strong>Case 3</strong>（30 km 高空、Mach 5 高超声速、60° 气动减速舵面 <code class="language-plaintext highlighter-rouge">case3_30km_M5_f60_gpu_inputs3_full08</code>）的算例分栏配置、GPU 显存溢出（OOM）单参数诊断调优、后台运行与后处理脚本以及多物理场/光学流场结果展示。</p> <hr> <h2 id="一算例背景与几何构型">一、算例背景与几何构型</h2> <div class="row justify-content-sm-center"> <div class="col-sm-12 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case5_stl_views-480.webp 480w,/assets/img/case5_stl_views-800.webp 800w,/assets/img/case5_stl_views-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case5_stl_views.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="火箭不同舵面展开角 STL 几何构型（0° / 30° / 60° / 90°）" data-zoomable="" loading="eager" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 火箭减速舵面四种展开角 STL 模型对比（点击可放大）。Case 3 采用 60° 展开角构型 <code>model_v1_60.stl</code>，来流沿 <code>+y</code> 方向以 Mach 5 入射。 </div> <p>Case 3 对应火箭再入返回段 <strong>30 km 高空、Mach 5</strong> 的典型高超声速连续流工况（Kn ≈ 2×10⁻⁶，滞止温度约 1360~1480 K，理想气体欧拉模型适用性良好），用于评估大展开角减速舵面在强弓形激波与舵面脱体激波干扰下的气动阻力特性。</p> <hr> <h2 id="二case-3-算例配置分栏详解inputs3">二、Case 3 算例配置分栏详解（<code class="language-plaintext highlighter-rouge">inputs3</code>）</h2> <p><code class="language-plaintext highlighter-rouge">cases/case3_30km_M5/inputs3</code> 为独立完整的 GPU 配置文件（直接读取运行，无需拼接 <code class="language-plaintext highlighter-rouge">common.inputs</code>），以下按六大功能模块<strong>分栏列出</strong>全部核心配置：</p> <div class="row cfg-grid"> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>1. 自由来流与静止启动（Free Stream &amp; Init）</h4> <ul> <li> <b>飞行高度与马赫数</b>：30 km，<code>prob.mach = 5.0</code>，来流方向 <code>+y</code>（<code>0. 1. 0.</code>）</li> <li> <b>来流静压 / 静温（CGS）</b>：<code>prob.p_inf = 1.2e4</code> dyn/cm²（1.2 kPa），<code>prob.T_inf = 227.0</code> K（声速约 302 m/s，来流速度约 1510 m/s）</li> <li> <b>初始流场模式</b>：<code>prob.init_mode = 1</code>（<b>全域气体静止</b>，由入口施加 Mach 5 来流向下游推进建立流场；高超声速下启动激波可顺利向下游洗出计算域）</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>2. STL 几何与嵌入式边界（STL &amp; AMReX-EB）</h4> <ul> <li> <b>几何文件</b>：<code>eb2.geom_type = stl</code>，<code>eb2.stl_file = rocket.stl</code>（复制自 <code>geometry/model_v1_60.stl</code>）</li> <li> <b>单位缩放与平移</b>：<code>eb2.stl_scale = 0.1</code>（mm → cm），<code>eb2.stl_center = 0. 40.91 0.</code>（适配 60° 舵面坐标系）</li> <li> <b>切割单元构建</b>：<code>eb2.cover_multiple_cuts = 1</code>（处理舵面铰链狭缝多重切割），<code>eb2.coarse_by_coarsening = 0</code>（各层直接由 STL 构建）</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>3. 计算域尺寸与边界条件（Domain &amp; BCs）</h4> <ul> <li> <b>计算域范围</b>：<code>x, z ∈ [-1024, 1024]</code> cm，<code>y ∈ [-1024, 2048]</code> cm（总尺度 <code>20.48 × 30.72 × 20.48 m</code>，复用 Case 5 大域将入口前移）</li> <li> <b>粗网格划分</b>：<code>amr.n_cell = 64 96 64</code>，对应 L0 基础网格间距 <b>32 cm</b> </li> <li> <b>边界类型</b>：<code>cns.lo_bc = 2 1 2</code>（<code>y = -1024 cm</code> 设为超声速自由来流入口 <code>1</code>），<code>cns.hi_bc = 2 2 2</code>（侧向及下游设为零梯度外流 <code>2</code>）</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>4. 欧拉格式与小切割单元保护（Solver &amp; Repair）</h4> <ul> <li> <b>气体物性</b>：理想气体无粘求解（<code>cns.do_visc = 0</code>，<code>eos_gamma = 1.4</code>，<code>eos_mu = 28.97</code>）</li> <li> <b>重构与推进</b>：<code>cns.plm_iorder = 2</code>，<code>plm_theta = 1.0</code>（minmod 限制器抑制强激波振荡），<code>cfl = 0.3</code>，开启层间通量守恒修正 <code>do_reflux = 1</code> </li> <li> <b>小单元温度保护</b>：<code>tiny_cell_vfrac = 0.1</code>，<code>T_floor = 10.0 K</code>，<code>repair_T_min = 50.0 K</code>（防止背风膨胀区切单元非物理低温崩溃）</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>5. AMR 网格层级与 GPU 负载均衡（AMR &amp; GPU）</h4> <ul> <li> <b>4 层网格体系</b>：<code>amr.max_level = 3</code>，<code>ref_ratio = 2 2 2</code>，对应分辨率 <b>L0–L3 = 32 / 16 / 8 / 4 cm</b> </li> <li> <b>分块与缓冲</b>：<code>blocking_factor = 8</code>，<code>max_grid_size = 32</code>，<code>regrid_int = 4 4 4</code>，<code>n_error_buf = 2 2 2 2</code>，<code>grid_eff = 0.7</code> </li> <li> <b>GPU 内存池与负载</b>：开启工作量估计负载均衡（<code>loadbalance_with_workestimates = 1</code>）；<code>amrex.the_arena_init_size = 536870912</code>（512 MiB 初始池，非显存硬上限）</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>6. 网格加密区域与输出监测（Refinement &amp; I/O）</h4> <ul> <li> <b>表面与固定盒加密</b>：开启切割单元表面加密 <code>refine_cutcells = 1</code>（至 <b>L3：4 cm</b>）；核心固定加密盒 <code>[-256, 256] × [-192, 1280] × [-256, 256] cm</code> </li> <li> <b>动态判据开关</b>：<code>refine_max_dengrad_lev = 0</code>，<code>refine_shock_max_lev = 0</code>（显存受控关键设置，详见下节）</li> <li> <b>采样与气动力</b>：<code>plot_per = 5.0e-4 s</code>，<code>check_per = 0.005 s</code>；每 2 步积分气动力至 <code>forces.csv</code>（参考面积 <code>31415.93 cm²</code>）</li> </ul> </div> </div> </div> <hr> <h2 id="三显存诊断分栏对比inputs2oomvs-inputs3稳定运行">三、显存诊断分栏对比：<code class="language-plaintext highlighter-rouge">inputs2</code>（OOM）vs <code class="language-plaintext highlighter-rouge">inputs3</code>（稳定运行）</h2> <p>在 GPU 移植调试中，<code class="language-plaintext highlighter-rouge">inputs2</code> 因启动激波触发全计算域大规模细网格导致显存溢出；<code class="language-plaintext highlighter-rouge">inputs3</code> 仅修改<strong>单个参数</strong>即定位并解决了显存瓶颈：</p> <div class="row cfg-grid"> <div class="col-md-6 cfg-col"> <div class="cfg-card cfg-card-warn"> <h4>原方案 <code>inputs2</code>：三重加密导致 GPU 显存溢出</h4> <p>同时启用了<b>固定盒加密</b>、<b>火箭表面加密</b>与<b>全域密度差动态加密</b>：</p> <pre><code>cns.refine_dengrad = 1.8e-7       # 约 1% rho_inf，高度敏感
+cns.refine_max_dengrad_lev = 3    # 允许全域触发 L3 (4 cm)</code></pre> <p class="mt-2 mb-0"><b>失败机理</b>：Case 3 采用静止气体 + Mach 5 强入口启动，启动波在入口附近形成横跨大面积区域的密度梯度，高敏阈值瞬间触发海量 L3 细网格，在第 8 粗步（<code>t ≈ 6.78×10⁻⁴ s</code>）耗尽显存（GPU OOM）。</p> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card cfg-card-ok"> <h4>改进方案 <code>inputs3</code>：关闭动态标定，全程稳定计算</h4> <p>相对于 <code>inputs2</code> <b>仅修改一项</b>，关闭密度梯度触发的额外网格增殖：</p> <pre><code>cns.refine_max_dengrad_lev = 0    # 关闭密度差动态加密
+cns.refine_shock_max_lev   = 0    # 压力跳变动态加密同样保持关闭</code></pre> <p class="mt-2 mb-0"><b>核心结论</b>：关闭的是“按流场梯度自动追加细网格”，<b>并非关闭求解器的激波捕捉能力</b>——求解器依然在固定加密盒与近壁 4 cm 网格上精确计算强激波，显存占用稳定可控。</p> </div> </div> </div> <h3 id="inputs3-各区域网格分辨率与激波捕捉效果对照"> <code class="language-plaintext highlighter-rouge">inputs3</code> 各区域网格分辨率与激波捕捉效果对照</h3> <table> <thead> <tr> <th style="text-align: left">激波所在区域</th> <th style="text-align: left">实际网格分辨率</th> <th style="text-align: left">对流场与激波捕捉的影响</th> </tr> </thead> <tbody> <tr> <td style="text-align: left"> <strong>固定加密盒内部</strong>（<code class="language-plaintext highlighter-rouge">[-256, 256] × [-192, 1280] × [-256, 256] cm</code>）</td> <td style="text-align: left"><strong>最细 4 cm（L3）</strong></td> <td style="text-align: left">完整包络箭体头部弓形激波、60° 舵面激波与近尾迹，高分辨率清晰刻画波系</td> </tr> <tr> <td style="text-align: left"> <strong>火箭表面附近</strong>（STL 切割单元）</td> <td style="text-align: left"><strong>表面加密至 4 cm（L3）</strong></td> <td style="text-align: left">保证壁面压力积分与气动阻力系数 \(C_d\) 计算精度</td> </tr> <tr> <td style="text-align: left"> <strong>固定盒外远场区域</strong>（<code class="language-plaintext highlighter-rouge">\|x\| &gt; 2.56 m</code>）</td> <td style="text-align: left">逐级过渡至 <strong>32 cm（L0）</strong> </td> <td style="text-align: left">激波仍连续正常传播并顺利穿出外边界，仅远场波面厚度变宽、细节略平滑</td> </tr> </tbody> </table> <hr> <h2 id="四gpu-两阶段运行与监控流程">四、GPU 两阶段运行与监控流程</h2> <p>采用“先短程启动验证（<code class="language-plaintext highlighter-rouge">0.012 s</code>）、再长程稳态推进（设定 <code class="language-plaintext highlighter-rouge">stop_time = 0.8</code>）”的两阶段执行方案：</p> <div class="row cfg-grid"> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>阶段一：短程显存诊断验证（<code>0.012 s</code>）</h4> <p>读取 <code>inputs3</code> 验证启动激波阶段显存稳定性，输出至 <code>case3_30km_M5_f60_gpu_inputs3_trial</code>：</p> <pre><code class="language-bash">ROOT="$HOME/XiaohuiGao/rocket_cns_v4_gpu/rocket_cns_v4"
+EXE="$ROOT/build_gpu/bin/rocket_cns"
+OUT="$ROOT/results/case3_30km_M5_f60_gpu_inputs3_trial"
+
+export OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES=0
+mkdir -p "$OUT"
+cp "$ROOT/cases/case3_30km_M5/inputs3" "$OUT/inputs.used"
+cp "$ROOT/geometry/model_v1_60.stl" "$OUT/rocket.stl"
+cd "$OUT" &amp;&amp; "$EXE" inputs.used 2&gt;&amp;1 | tee run.log</code></pre> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>阶段二：长程完整计算（<code>full08</code>）</h4> <p>在 <code>tmux</code> 会话中追加 <code>stop_time = 0.8</code> 覆盖原短程时长，保存至独立目录 <code>case3_30km_M5_f60_gpu_inputs3_full08</code>：</p> <pre><code class="language-bash">OUT="$ROOT/results/case3_30km_M5_f60_gpu_inputs3_full08"
+mkdir -p "$OUT"
+cp "$ROOT/cases/case3_30km_M5/inputs3" "$OUT/inputs.used"
+cp "$ROOT/geometry/model_v1_60.stl" "$OUT/rocket.stl"
+printf '\nstop_time = 0.8\n' &gt;&gt; "$OUT/inputs.used"
+cd "$OUT" &amp;&amp; "$EXE" inputs.used 2&gt;&amp;1 | tee run.log
+
+# 另开终端实时跟踪进度
+tail -n 30 -F "$OUT/run.log"</code></pre> </div> </div> </div> <hr> <h2 id="五后处理出图与动画合成流水线">五、后处理出图与动画合成流水线</h2> <p>算例生成的 <code class="language-plaintext highlighter-rouge">plt*</code> 时间步数据通过以下脚本生成单帧图、总览序列与多物理场 MP4/GIF 视频（<code class="language-plaintext highlighter-rouge">make_movie.py</code> 会自动扫描 <code class="language-plaintext highlighter-rouge">$R/frames/*</code> 与 <code class="language-plaintext highlighter-rouge">$R/summary_frames*</code> 下包含 <code class="language-plaintext highlighter-rouge">plt*.png</code> 的直接子目录）：</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">R</span><span class="o">=</span><span class="s2">"results/case3_30km_M5_f60_gpu_inputs3_full08"</span>
+
+<span class="c"># 1. 生成单张缩放总览图（马赫数、无量纲压力、温度 + Cd 曲线）</span>
+python3 tools/plot_case.py <span class="s2">"</span><span class="nv">$R</span><span class="s2">"</span> <span class="nt">--zoom</span> 0.8 <span class="nt">-o</span> <span class="s2">"</span><span class="nv">$R</span><span class="s2">/summary_zoom.png"</span>
+
+<span class="c"># 2. 批量生成各物理量与光学流场帧图并导出动画</span>
+python3 tools/post/make_frames.py <span class="s2">"</span><span class="nv">$R</span><span class="s2">"</span> <span class="nt">--vars</span> mach pressure temperature schlieren <span class="nt">--jobs</span> 4
+python3 tools/post/make_movie.py <span class="s2">"</span><span class="nv">$R</span><span class="s2">"</span> <span class="nt">--vars</span> mach pressure temperature schlieren
+
+<span class="c"># 3. 逐个 plt 时刻批量生成总览帧图（加 --zoom 0.8 生成近场放大版）并合成 15 fps 视频</span>
+<span class="nv">OUT</span><span class="o">=</span><span class="s2">"</span><span class="nv">$R</span><span class="s2">/summary_frames_zoom"</span> <span class="o">&amp;&amp;</span> <span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$OUT</span><span class="s2">"</span>
+<span class="k">for </span>P <span class="k">in</span> <span class="s2">"</span><span class="nv">$R</span><span class="s2">"</span>/plt<span class="k">*</span><span class="p">;</span> <span class="k">do
+  </span><span class="nv">NAME</span><span class="o">=</span><span class="si">$(</span><span class="nb">basename</span> <span class="s2">"</span><span class="nv">$P</span><span class="s2">"</span><span class="si">)</span>
+  <span class="o">[[</span> <span class="s2">"</span><span class="nv">$NAME</span><span class="s2">"</span> <span class="o">=</span>~ ^plt[0-9]+<span class="nv">$ </span><span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$P</span><span class="s2">/Header"</span> <span class="o">]</span> <span class="o">||</span> <span class="k">continue
+  </span>python3 tools/plot_case.py <span class="s2">"</span><span class="nv">$R</span><span class="s2">"</span> <span class="nt">--plt</span> <span class="s2">"</span><span class="nv">$NAME</span><span class="s2">"</span> <span class="nt">--zoom</span> 0.8 <span class="nt">-o</span> <span class="s2">"</span><span class="nv">$OUT</span><span class="s2">/</span><span class="nv">$NAME</span><span class="s2">.png"</span>
+<span class="k">done
+</span>python3 tools/post/make_movie.py <span class="s2">"</span><span class="nv">$R</span><span class="s2">"</span> <span class="nt">--vars</span> summary_frames_zoom <span class="nt">--fps</span> 15
+</code></pre></div></div> <hr> <h2 id="六算例结果展示mach-5-高超声速激波演化与气动特性">六、算例结果展示（Mach 5 高超声速激波演化与气动特性）</h2> <p>计算推进至 <code class="language-plaintext highlighter-rouge">plt09078</code>（<code class="language-plaintext highlighter-rouge">t = 316.04 ms</code>，已超过 30 倍箭体特征流经时间），启动激波早在约 <code class="language-plaintext highlighter-rouge">50 ms</code> 前后完全洗出，流场与气动力高度收敛稳定。下方所有图片均支持<strong>点击放大</strong>，视频默认显示高清预览帧并支持<strong>点击播放、暂停与拖动进度条</strong>（自动单路互斥播放，保证页面流畅不卡顿）：</p> <table> <thead> <tr> <th style="text-align: left">关键气动与流场指标</th> <th style="text-align: left">统计结果（<code class="language-plaintext highlighter-rouge">plt09078</code>，<code class="language-plaintext highlighter-rouge">t = 316.04 ms</code>，最细网格 <code class="language-plaintext highlighter-rouge">4 cm</code>）</th> </tr> </thead> <tbody> <tr> <td style="text-align: left">稳态平均阻力系数 \(C_d\)（末 25% 时段）</td> <td style="text-align: left"> <strong>2.194</strong>（60° 舵面强激波增阻显著）</td> </tr> <tr> <td style="text-align: left">阻力系数脉动幅值（<code class="language-plaintext highlighter-rouge">Cd swing</code>）</td> <td style="text-align: left"> <strong>0.045</strong>（高超声速波系稳定，脉动极小）</td> </tr> <tr> <td style="text-align: left">流场最大马赫数 <code class="language-plaintext highlighter-rouge">max Mach</code> </td> <td style="text-align: left"><strong>5.00</strong></td> </tr> <tr> <td style="text-align: left">流场最高温度 <code class="language-plaintext highlighter-rouge">max T</code> </td> <td style="text-align: left"> <strong>1481 K</strong>（来流 227 K，鼻锥与舵面迎风侧激波气动加热）</td> </tr> <tr> <td style="text-align: left">流场最大压比 <code class="language-plaintext highlighter-rouge">max p / p_inf</code> </td> <td style="text-align: left"> <strong>35.6</strong>（强弓形激波滞止高压区）</td> </tr> </tbody> </table> <h3 id="61-综合总览近场放大视图-summary-zoom">6.1 综合总览（近场放大视图 Summary Zoom）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/summary_zoom/plt09031-480.webp 480w,/assets/img/case3/summary_zoom/plt09031-800.webp 800w,/assets/img/case3/summary_zoom/plt09031-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/summary_zoom/plt09031.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="近场总览 plt09031 (t = 315.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/summary_zoom/plt09057-480.webp 480w,/assets/img/case3/summary_zoom/plt09057-800.webp 800w,/assets/img/case3/summary_zoom/plt09057-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/summary_zoom/plt09057.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="近场总览 plt09057 (t = 315.50 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/summary_zoom/plt09078-480.webp 480w,/assets/img/case3/summary_zoom/plt09078-800.webp 800w,/assets/img/case3/summary_zoom/plt09078-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/summary_zoom/plt09078.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="近场总览 plt09078 (t = 316.04 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 近场放大综合总览关键帧并列对比（从左至右：<code>plt09031</code> / <code>315.00 ms</code>、<code>plt09057</code> / <code>315.50 ms</code>、<code>plt09078</code> / <code>316.04 ms</code>）。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-12"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case3/summary_zoom/plt09078.png"> <source src="/assets/video/case3/movie_summary_frames_zoom.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> Case 3 近场放大总览（马赫数、对数压力比、温度与 <i>C<sub>d</sub></i> 收敛过程）0 → 316 ms 全程演化视频。 </div> <h3 id="62-综合总览全计算域视图-summary-full-domain">6.2 综合总览（全计算域视图 Summary Full Domain）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/summary/plt09031-480.webp 480w,/assets/img/case3/summary/plt09031-800.webp 800w,/assets/img/case3/summary/plt09031-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/summary/plt09031.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="全域总览 plt09031 (t = 315.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/summary/plt09057-480.webp 480w,/assets/img/case3/summary/plt09057-800.webp 800w,/assets/img/case3/summary/plt09057-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/summary/plt09057.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="全域总览 plt09057 (t = 315.50 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/summary/plt09078-480.webp 480w,/assets/img/case3/summary/plt09078-800.webp 800w,/assets/img/case3/summary/plt09078-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/summary/plt09078.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="全域总览 plt09078 (t = 316.04 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 全计算域（<code>20.48 × 30.72 m</code>）总览关键帧对比，可完整观察启动波洗出及大尺度尾迹波系结构。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-12"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case3/summary/plt09078.png"> <source src="/assets/video/case3/movie_summary_frames.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 全计算域总览演化视频（清晰展示 <code>init_mode = 1</code> 静止气体受 Mach 5 入射激波扫掠建立稳态流场的完整物理过程）。 </div> <h3 id="63-马赫数流场mach-number">6.3 马赫数流场（Mach Number）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/mach/plt09031-480.webp 480w,/assets/img/case3/mach/plt09031-800.webp 800w,/assets/img/case3/mach/plt09031-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/mach/plt09031.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="马赫数流场 plt09031 (t = 315.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/mach/plt09057-480.webp 480w,/assets/img/case3/mach/plt09057-800.webp 800w,/assets/img/case3/mach/plt09057-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/mach/plt09057.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="马赫数流场 plt09057 (t = 315.50 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/mach/plt09078-480.webp 480w,/assets/img/case3/mach/plt09078-800.webp 800w,/assets/img/case3/mach/plt09078-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/mach/plt09078.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="马赫数流场 plt09078 (t = 316.04 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 马赫数分布关键帧对比（<code>315.00 ms</code> / <code>315.50 ms</code> / <code>316.04 ms</code>）：头部弓形激波、60° 舵面斜激波及背风侧低速回流区结构清晰；同时可见 <code>|x| = 2.56 m</code> 固定加密盒边界内外的网格分辨率过渡。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case3/mach/plt09078.png"> <source src="/assets/video/case3/movie_mach.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 马赫数流场与 <i>C<sub>d</sub></i> 同步演化视频（0 → 316 ms）。 </div> <h3 id="64-压力流场pressure-p--p_infty">6.4 压力流场（Pressure, \(p / p_\infty\)）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/pressure/plt09031-480.webp 480w,/assets/img/case3/pressure/plt09031-800.webp 800w,/assets/img/case3/pressure/plt09031-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/pressure/plt09031.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力流场 plt09031 (t = 315.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/pressure/plt09057-480.webp 480w,/assets/img/case3/pressure/plt09057-800.webp 800w,/assets/img/case3/pressure/plt09057-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/pressure/plt09057.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力流场 plt09057 (t = 315.50 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/pressure/plt09078-480.webp 480w,/assets/img/case3/pressure/plt09078-800.webp 800w,/assets/img/case3/pressure/plt09078-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/pressure/plt09078.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力流场 plt09078 (t = 316.04 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 无量纲静压 <i>p / p<sub>∞</sub></i> 分布关键帧对比（<code>315.00 ms</code> / <code>315.50 ms</code> / <code>316.04 ms</code>），鼻锥激波层与 60° 舵面迎风高压区峰值达 35.6 <i>p<sub>∞</sub></i>，箭体底部呈强膨胀低压区。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case3/pressure/plt09078.png"> <source src="/assets/video/case3/movie_pressure.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 无量纲静压 <i>p / p<sub>∞</sub></i> 演化视频（0 → 316 ms）。 </div> <h3 id="65-温度流场temperature-k">6.5 温度流场（Temperature, K）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/temperature/plt09031-480.webp 480w,/assets/img/case3/temperature/plt09031-800.webp 800w,/assets/img/case3/temperature/plt09031-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/temperature/plt09031.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度流场 plt09031 (t = 315.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/temperature/plt09057-480.webp 480w,/assets/img/case3/temperature/plt09057-800.webp 800w,/assets/img/case3/temperature/plt09057-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/temperature/plt09057.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度流场 plt09057 (t = 315.50 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/temperature/plt09078-480.webp 480w,/assets/img/case3/temperature/plt09078-800.webp 800w,/assets/img/case3/temperature/plt09078-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/temperature/plt09078.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度流场 plt09078 (t = 316.04 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 静温分布关键帧对比（<code>315.00 ms</code> / <code>315.50 ms</code> / <code>316.04 ms</code>），鼻锥脱体激波层与舵面再压缩区高温尾迹（最高 1481 K）对称清晰。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case3/temperature/plt09078.png"> <source src="/assets/video/case3/movie_temperature.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 温度场演化视频（0 → 316 ms）。 </div> <h3 id="66-数值纹影schlieren垂直刀口">6.6 数值纹影（Schlieren，垂直刀口）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/schlieren/plt09031-480.webp 480w,/assets/img/case3/schlieren/plt09031-800.webp 800w,/assets/img/case3/schlieren/plt09031-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/schlieren/plt09031.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影 plt09031 (t = 315.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/schlieren/plt09057-480.webp 480w,/assets/img/case3/schlieren/plt09057-800.webp 800w,/assets/img/case3/schlieren/plt09057-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/schlieren/plt09057.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影 plt09057 (t = 315.50 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/schlieren/plt09078-480.webp 480w,/assets/img/case3/schlieren/plt09078-800.webp 800w,/assets/img/case3/schlieren/plt09078-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/schlieren/plt09078.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影 plt09078 (t = 316.04 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 数值纹影（沿 <i>z</i> 视线积分，垂直刀口）关键帧对比：直观展示了固定加密盒内（4 cm）锐利的弓形激波/舵面激波/尾迹剪切层，以及盒外粗网格区的波系连续延伸。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case3/schlieren/plt09078.png"> <source src="/assets/video/case3/movie_schlieren.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 数值纹影动态演化视频（点击播放，支持暂停与进度拖动）。 </div> <h3 id="67-数值阴影shadowgraph">6.7 数值阴影（Shadowgraph）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/shadowgraph/plt09031-480.webp 480w,/assets/img/case3/shadowgraph/plt09031-800.webp 800w,/assets/img/case3/shadowgraph/plt09031-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/shadowgraph/plt09031.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值阴影 plt09031 (t = 315.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/shadowgraph/plt09057-480.webp 480w,/assets/img/case3/shadowgraph/plt09057-800.webp 800w,/assets/img/case3/shadowgraph/plt09057-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/shadowgraph/plt09057.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值阴影 plt09057 (t = 315.50 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/shadowgraph/plt09078-480.webp 480w,/assets/img/case3/shadowgraph/plt09078-800.webp 800w,/assets/img/case3/shadowgraph/plt09078-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/shadowgraph/plt09078.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值阴影 plt09078 (t = 316.04 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 数值阴影关键帧对比（<code>315.00 ms</code> / <code>315.50 ms</code> / <code>316.04 ms</code>），突出显示激波面密度二阶导数突变位置。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case3/shadowgraph/plt09078.png"> <source src="/assets/video/case3/movie_shadowgraph.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 数值阴影动态演化视频（点击播放，支持暂停与进度拖动）。 </div> <h3 id="68-数值干涉interferogram无限条纹">6.8 数值干涉（Interferogram，无限条纹）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/interferogram/plt09031-480.webp 480w,/assets/img/case3/interferogram/plt09031-800.webp 800w,/assets/img/case3/interferogram/plt09031-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/interferogram/plt09031.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值干涉 plt09031 (t = 315.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/interferogram/plt09057-480.webp 480w,/assets/img/case3/interferogram/plt09057-800.webp 800w,/assets/img/case3/interferogram/plt09057-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/interferogram/plt09057.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值干涉 plt09057 (t = 315.50 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case3/interferogram/plt09078-480.webp 480w,/assets/img/case3/interferogram/plt09078-800.webp 800w,/assets/img/case3/interferogram/plt09078-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case3/interferogram/plt09078.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值干涉 plt09078 (t = 316.04 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 数值干涉（无限条纹，λ = 4662 nm 缩放）关键帧对比（<code>315.00 ms</code> / <code>315.50 ms</code> / <code>316.04 ms</code>），条纹疏密清晰反映激波层与膨胀尾迹内的等视线积分密度梯度。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case3/interferogram/plt09078.png"> <source src="/assets/video/case3/movie_interferogram.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 数值干涉动态演化视频（点击播放，支持暂停与进度拖动）。 </div> <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const videos = Array.from(document.querySelectorAll("video"));
+    videos.forEach((v) => {
+      v.addEventListener("play", () => {
+        videos.forEach((other) => {
+          if (other !== v && !other.paused) other.pause();
+        });
+      });
+    });
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting && !e.target.paused) e.target.pause();
+        });
+      }, { threshold: 0.1 });
+      videos.forEach((v) => io.observe(v));
+    }
+  });
+</script> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 xh g. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. <style>#navbar a.navbar-brand,#navbar a.navbar-brand span{font-size:0!important;line-height:0!important;}#navbar a.navbar-brand{display:inline-flex;align-items:center;}#navbar a.navbar-brand::after{content:"";display:inline-block;width:152px;height:34px;background:url("/assets/img/signature.png") no-repeat left center/contain;}html[data-theme="dark"] #navbar a.navbar-brand::after{filter:invert(1);}</style> </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script defer src="/assets/js/table-engine.js?v=c52129a997ab5b8a3622ec0506761421" type="text/javascript"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "projects",
+          description: "A growing collection of your cool projects.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "This is a description of the page. You can modify it in '_pages/cv.md'. You can also change or remove the top pdf download button.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-teaching",
+          title: "teaching",
+          description: "Course materials, schedules, and resources for classes taught.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/teaching/";
+          },
+        },{id: "nav-people",
+          title: "people",
+          description: "members of the lab or group",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/people/";
+          },
+        },{id: "dropdown-bookshelf",
+              title: "bookshelf",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/books/";
+              },
+            },{id: "dropdown-blog",
+              title: "blog",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/blog/";
+              },
+            },{id: "post-a-post-with-marimo-snippets",
+        
+          title: "a post with marimo snippets",
+        
+        description: "running Python in the browser with marimo",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/marimo/";
+          
+        },
+      },{id: "post-a-post-with-plotly-js",
+        
+          title: "a post with plotly.js",
+        
+        description: "this is what included plotly.js code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/plotly/";
+          
+        },
+      },{id: "post-a-post-with-image-galleries",
+        
+          title: "a post with image galleries",
+        
+        description: "this is what included image galleries could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/photo-gallery/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-a-post-with-tabs",
+        
+          title: "a post with tabs",
+        
+        description: "this is what included tabs in a post could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/tabs/";
+          
+        },
+      },{id: "post-a-post-with-typograms",
+        
+          title: "a post with typograms",
+        
+        description: "this is what included typograms code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/typograms/";
+          
+        },
+      },{id: "post-a-post-that-can-be-cited",
+        
+          title: "a post that can be cited",
+        
+        description: "this is what a post that can be cited looks like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/post-citation/";
+          
+        },
+      },{id: "post-a-post-with-pseudo-code",
+        
+          title: "a post with pseudo code",
+        
+        description: "this is what included pseudo code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/pseudocode/";
+          
+        },
+      },{id: "post-a-post-with-code-diff",
+        
+          title: "a post with code diff",
+        
+        description: "this is how you can display code diffs",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/code-diff/";
+          
+        },
+      },{id: "post-a-post-with-advanced-image-components",
+        
+          title: "a post with advanced image components",
+        
+        description: "this is what advanced image components could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/advanced-images/";
+          
+        },
+      },{id: "post-a-post-with-vega-lite",
+        
+          title: "a post with vega lite",
+        
+        description: "this is what included vega lite code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/vega-lite/";
+          
+        },
+      },{id: "post-a-post-with-geojson",
+        
+          title: "a post with geojson",
+        
+        description: "this is what included geojson code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/geojson-map/";
+          
+        },
+      },{id: "post-a-post-with-echarts",
+        
+          title: "a post with echarts",
+        
+        description: "this is what included echarts code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/echarts/";
+          
+        },
+      },{id: "post-a-post-with-chart-js",
+        
+          title: "a post with chart.js",
+        
+        description: "this is what included chart.js code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/chartjs/";
+          
+        },
+      },{id: "post-a-post-with-tikzjax",
+        
+          title: "a post with TikZJax",
+        
+        description: "this is what included TikZ code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/tikzjax/";
+          
+        },
+      },{id: "post-a-post-with-bibliography",
+        
+          title: "a post with bibliography",
+        
+        description: "an example of a blog post with bibliography",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/post-bibliography/";
+          
+        },
+      },{id: "post-a-post-with-jupyter-notebook",
+        
+          title: "a post with jupyter notebook",
+        
+        description: "an example of a blog post with jupyter notebook",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/jupyter-notebook/";
+          
+        },
+      },{id: "post-a-post-with-custom-blockquotes",
+        
+          title: "a post with custom blockquotes",
+        
+        description: "an example of a blog post with custom blockquotes",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/custom-blockquotes/";
+          
+        },
+      },{id: "post-a-post-with-table-of-contents-on-a-sidebar",
+        
+          title: "a post with table of contents on a sidebar",
+        
+        description: "an example of a blog post with table of contents on a sidebar",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/sidebar-table-of-contents/";
+          
+        },
+      },{id: "post-a-post-with-audios",
+        
+          title: "a post with audios",
+        
+        description: "this is what included audios could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/audios/";
+          
+        },
+      },{id: "post-a-post-with-videos",
+        
+          title: "a post with videos",
+        
+        description: "this is what included videos could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/videos/";
+          
+        },
+      },{id: "post-displaying-beautiful-interactive-tables",
+        
+          title: "displaying beautiful interactive tables",
+        
+        description: "an example of how to use interactive tables in al-folio",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/tables/";
+          
+        },
+      },{id: "post-a-post-with-table-of-contents",
+        
+          title: "a post with table of contents",
+        
+        description: "an example of a blog post with table of contents",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/table-of-contents/";
+          
+        },
+      },{id: "post-a-post-with-giscus-comments",
+        
+          title: "a post with giscus comments",
+        
+        description: "an example of a blog post with giscus comments",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/giscus-comments/";
+          
+        },
+      },{id: "post-یک-نوشتهٔ-راست-چین",
+        
+          title: "یک نوشتهٔ راست‌چین",
+        
+        description: "نمونه‌ای از پشتیبانی زبان‌های راست‌چین",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/rtl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-a-post-with-redirect",
+        
+          title: "a post with redirect",
+        
+        description: "you can also redirect to assets like pdf",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/assets/pdf/example_pdf.pdf";
+          
+        },
+      },{id: "post-a-post-with-diagrams",
+        
+          title: "a post with diagrams",
+        
+        description: "an example of a blog post with diagrams",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/diagrams/";
+          
+        },
+      },{id: "post-a-distill-style-blog-post",
+        
+          title: "a distill-style blog post",
+        
+        description: "an example of a distill-style blog post and main elements",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/distill/";
+          
+        },
+      },{id: "post-a-post-with-twitter",
+        
+          title: "a post with twitter",
+        
+        description: "an example of a blog post with twitter",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/twitter/";
+          
+        },
+      },{id: "post-a-post-with-disqus-comments",
+        
+          title: "a post with disqus comments",
+        
+        description: "an example of a blog post with disqus comments",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/disqus-comments/";
+          
+        },
+      },{id: "post-a-post-with-math",
+        
+          title: "a post with math",
+        
+        description: "an example of a blog post with some math",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/math/";
+          
+        },
+      },{id: "post-a-post-with-code",
+        
+          title: "a post with code",
+        
+        description: "an example of a blog post with some code",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/code/";
+          
+        },
+      },{id: "post-a-post-with-images",
+        
+          title: "a post with images",
+        
+        description: "this is what included images could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/images/";
+          
+        },
+      },{id: "post-a-post-with-formatting-and-links",
+        
+          title: "a post with formatting and links",
+        
+        description: "march & april, looking forward to summer",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/formatting-and-links/";
+          
+        },
+      },{id: "books-the-godfather",
+          title: 'The Godfather',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/the_godfather/";
+            },},{id: "news-a-simple-inline-announcement",
+          title: 'A simple inline announcement.',
+          description: "",
+          section: "News",},{id: "news-a-long-announcement-with-details",
+          title: 'A long announcement with details',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/announcement_2/";
+            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
+          title: 'A simple inline announcement with Markdown emoji! <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png" height="20" width="20"> <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">',
+          description: "",
+          section: "News",},{id: "projects-project-1",
+          title: 'project 1',
+          description: "with background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/1_project/";
+            },},{id: "projects-project-2",
+          title: 'project 2',
+          description: "a project with a background image and giscus comments",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/2_project/";
+            },},{id: "projects-project-3-with-very-long-name",
+          title: 'project 3 with very long name',
+          description: "a project that redirects to another website",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/3_project/";
+            },},{id: "projects-project-4",
+          title: 'project 4',
+          description: "another without an image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/4_project/";
+            },},{id: "projects-project-5",
+          title: 'project 5',
+          description: "a project with a background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/5_project/";
+            },},{id: "projects-project-6",
+          title: 'project 6',
+          description: "a project with no image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/6_project/";
+            },},{id: "projects-project-7",
+          title: 'project 7',
+          description: "with background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/7_project/";
+            },},{id: "projects-project-8",
+          title: 'project 8',
+          description: "an other project with a background image and giscus comments",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/8_project/";
+            },},{id: "projects-project-9",
+          title: 'project 9',
+          description: "another project with an image 🎉",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/9_project/";
+            },},{id: "projects-case-3-火箭-30-km-ma-5-gpu-仿真",
+          title: 'Case 3: 火箭 30 km / Ma 5 GPU 仿真',
+          description: "60° 舵面高超声速流场仿真、AMR 显存诊断调优（inputs2 → inputs3）与激波演化展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/case3/";
+            },},{id: "projects-case-5-火箭-1-km-ma-0-3-gpu-仿真",
+          title: 'Case 5: 火箭 1 km / Ma 0.3 GPU 仿真',
+          description: "60° 舵面 AMReX-CNS 气动仿真、AMR 加密策略与 1.5 s 全流场演化展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/case5/";
+            },},{id: "teachings-data-science-fundamentals",
+          title: 'Data Science Fundamentals',
+          description: "This course covers the foundational aspects of data science, including data collection, cleaning, analysis, and visualization. Students will learn practical skills for working with real-world datasets.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/data-science-fundamentals/";
+            },},{id: "teachings-introduction-to-machine-learning",
+          title: 'Introduction to Machine Learning',
+          description: "This course provides an introduction to machine learning concepts, algorithms, and applications. Students will learn about supervised and unsupervised learning, model evaluation, and practical implementations.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/introduction-to-machine-learning/";
+            },},{
+        id: 'social-cv',
+        title: 'CV',
+        section: 'Socials',
+        handler: () => {
+          window.open("/assets/pdf/example_pdf.pdf", "_blank");
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%79%6F%75@%65%78%61%6D%70%6C%65.%63%6F%6D", "_blank");
+        },
+      },{
+        id: 'social-inspire',
+        title: 'Inspire HEP',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://inspirehep.net/authors/1010907", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+        id: 'social-scholar',
+        title: 'Google Scholar',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://scholar.google.com/citations?user=qc6CJjYAAAAJ", "_blank");
+        },
+      },{
+        id: 'social-custom_social',
+        title: 'Custom_social',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.alberteinstein.com/", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>
