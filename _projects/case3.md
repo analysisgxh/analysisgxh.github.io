@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Case 3: 火箭 30 km / Ma 5 GPU 仿真"
-description: 60° 舵面高超声速流场仿真、AMR 显存诊断调优（inputs2 → inputs3）与激波演化展示
+description: 60° 舵面高超声速流场、AMR 显存诊断调优（inputs2 → inputs3）与激波演化展示
 img: assets/img/case3/cover.png
 importance: 0
 category: work
@@ -57,7 +57,7 @@ pretty_table: true
   }
 </style>
 
-本页整理自火箭气动数值模拟项目 **Case 3**（30 km 高空、Mach 5 高超声速、60° 气动减速舵面 `case3_30km_M5_f60_gpu_inputs3_full08`）的算例分栏配置、GPU 显存溢出（OOM）单参数诊断调优、后台运行与后处理脚本以及多物理场/光学流场结果展示。
+火箭气动数值模拟项目 **Case 3**（30 km 高空、Mach 5 高超声速、60° 气动减速舵面 `case3_30km_M5_f60_gpu_inputs3_full08`）的算例分栏配置、GPU 显存溢出（OOM）单参数诊断调优、后台运行与后处理脚本以及多物理场/光学流场结果展示。
 
 ---
 
@@ -69,16 +69,17 @@ pretty_table: true
   </div>
 </div>
 <div class="caption">
-  火箭减速舵面四种展开角 STL 模型对比（点击可放大）。Case 3 采用 60° 展开角构型 <code>model_v1_60.stl</code>，来流沿 <code>+y</code> 方向以 Mach 5 入射。
+  火箭减速舵面四种展开角 STL 模型对比。Case 3 采用 60° 展开角构型 <code>model_v1_60.stl</code>，来流沿 <code>+y</code> 方向以 Mach 5 入射。
 </div>
 
 Case 3 对应火箭再入返回段 **30 km 高空、Mach 5** 的典型高超声速连续流工况（Kn ≈ 2×10⁻⁶，滞止温度约 1360~1480 K，理想气体欧拉模型适用性良好），用于评估大展开角减速舵面在强弓形激波与舵面脱体激波干扰下的气动阻力特性。
 
 ---
 
-## 二、Case 3 算例配置分栏详解（`inputs3`）
+## 二、Case 3 算例配置（`inputs3`）
 
-`cases/case3_30km_M5/inputs3` 为独立完整的 GPU 配置文件（直接读取运行，无需拼接 `common.inputs`），以下按六大功能模块**分栏列出**全部核心配置：
+`cases/case3_30km_M5/inputs3` 
+为独立完整的 GPU 配置文件（直接读取运行，无需拼接 `common.inputs`），以下按六大功能模块**分栏列出**全部核心配置：
 
 <div class="row cfg-grid">
   <div class="col-md-6 cfg-col">
