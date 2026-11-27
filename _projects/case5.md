@@ -8,7 +8,7 @@ category: work
 pretty_table: true
 ---
 
-本页整理自火箭气动数值模拟项目 **Case 5**（`case5_1km_M03_f60_gpu_success60_full`）的算例配置与运行记录，涵盖 GPU 完整算例启动监控、自适应网格加密（AMR）策略、v4 `common.inputs` 分区组合加密机制以及初始流场速度模式（`prob.init_mode`）说明，用于组会交流与演示。
+火箭气动数值模拟项目 **Case 5**（`case5_1km_M03_f60_gpu_success60_full`）算例配置、自适应网格加密（AMR）策略、v4 `common.inputs` 分区组合加密机制、初始流场速度模式（`prob.init_mode`）及 1.5 s 全流场演化结果。
 
 ---
 
@@ -20,7 +20,7 @@ pretty_table: true
   </div>
 </div>
 <div class="caption">
-  火箭气动减速舵面四种展开角 STL 模型对比（点击可放大查看）。本次 Case 5 GPU 算例采用 60° 展开角构型 <code>model_v1_60.stl</code>。
+  火箭气动减速舵面四种展开角 STL 模型对比。Case 5 采用 60° 展开角构型 <code>model_v1_60.stl</code>。
 </div>
 
 | 项目 | 参数 / 数值 | 说明 |
@@ -163,9 +163,9 @@ cns.refine_shock_start   = 2.5e-3
 
 ---
 
-## 六、后处理与可视化脚本速查
+## 六、后处理
 
-算例运行完成后，可使用项目自带的后处理脚本生成组会所需的流场总览图与动态演化视频：
+算例运行完成后，通过后处理脚本生成流场总览图与动态演化视频：
 
 | 脚本 | 主要用途 |
 | :--- | :--- |
@@ -184,7 +184,7 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
 
 ## 七、算例结果展示（1.5 s 完整仿真结果）
 
-完整 1.5 s GPU 仿真（最细网格 `dx = 4 cm`）在约 `t = 0.4 s` 后进入准定常旋涡脱落阶段，末 25% 时段主要气动统计指标如下（下方所有流场图均支持**点击放大**，视频支持**拖动进度条与暂停**以便组会讲解）：
+完整 1.5 s GPU 仿真（最细网格 `dx = 4 cm`）在约 `t = 0.4 s` 后进入准定常旋涡脱落阶段，末 25% 时段主要气动统计指标如下：
 
 | 关键指标 | 数值结果（`t = 1.500 s`） |
 | :--- | :--- |
@@ -331,7 +331,7 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
   </div>
 </div>
 <div class="caption">
-  数值纹影动态演化视频（点击播放，循环演示并支持暂停与进度拖动）。
+  数值纹影动态演化视频。
 </div>
 
 ### 7.6 数值阴影（Shadowgraph）
@@ -359,7 +359,7 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
   </div>
 </div>
 <div class="caption">
-  数值阴影动态演化视频（点击播放，循环演示并支持暂停与进度拖动）。
+  数值阴影动态演化视频。
 </div>
 
 ### 7.7 数值干涉（Interferogram，无限条纹）
@@ -387,7 +387,7 @@ python3 tools/plot_case.py results/case5_1km_M03_f60_gpu_success60_full \
   </div>
 </div>
 <div class="caption">
-  数值干涉动态演化视频（点击播放，循环演示并支持暂停与进度拖动）。
+  数值干涉动态演化视频。
 </div>
 
 <script>

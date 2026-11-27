@@ -57,7 +57,7 @@ pretty_table: true
   }
 </style>
 
-本页整理自火箭气动数值模拟项目 **Case 4**（10 km 高度、Mach 1.0 跨声速、60° 气动减速舵面）的实际运行参数 `inputs.used`、气体状态方程核验、16 GB GPU 显存瓶颈分析与 `chk00672`（`0.12 s` → `0.30 s`）断点续算流程，以及纯净流场和 **AMR 网格叠加（`--grids`）** 全套可视化结果。
+火箭气动数值模拟项目 **Case 4**（10 km 高度、Mach 1.0 跨声速、60° 气动减速舵面）的实际运行参数 `inputs.used`、气体状态方程核验、16 GB GPU 显存瓶颈分析、`chk00672`（`0.12 s` → `0.30 s`）断点续算及流场演化结果。
 
 ---
 
@@ -69,7 +69,7 @@ pretty_table: true
   </div>
 </div>
 <div class="caption">
-  火箭减速舵面四种展开角 STL 模型对比（点击可放大）。Case 4 采用 60° 展开角构型 <code>model_v1_60.stl</code>，来流沿 <code>+y</code> 方向以跨声速 Mach 1.0 入射。
+  火箭减速舵面四种展开角 STL 模型对比。Case 4 采用 60° 展开角构型 <code>model_v1_60.stl</code>，来流沿 <code>+y</code> 方向以跨声速 Mach 1.0 入射。
 </div>
 
 求解器采用理想空气状态方程（$$ \gamma = 1.4,\ \mu = 28.97 $$），由自由来流输入（`prob.mach = 1.0`，`prob.p_inf = 2.64e5` dyn/cm²，`prob.T_inf = 222.5` K）导出的热力学状态与标准飞行工况表高度吻合：
@@ -85,9 +85,9 @@ pretty_table: true
 
 ---
 
-## 二、Case 4 实际运行参数分栏详解（`CASE4/inputs.used`）
+## 二、Case 4 算例配置（`CASE4/inputs.used`）
 
-本次算例实际使用的 `inputs.used` 复用 Case 5 已验证的 60° 舵面 4 cm 网格框架并替换为 Case 4 跨声速物理条件（独立直接读取，不拼接 `common.inputs`），以下按六大功能模块**分栏讲出**：
+本次算例 `inputs.used` 复用 Case 5 已验证的 60° 舵面 4 cm 网格框架并替换为 Case 4 跨声速物理条件，核心配置如下：
 
 <div class="row cfg-grid">
   <div class="col-md-6 cfg-col">
@@ -154,7 +154,7 @@ pretty_table: true
 
 ---
 
-## 三、显存瓶颈分析与两阶段续算方案（`LOGCASE4` 分栏复盘）
+## 三、显存瓶颈分析与两阶段续算方案
 
 <div class="row cfg-grid">
   <div class="col-md-6 cfg-col">
@@ -209,7 +209,7 @@ python3 tools/post/make_movie.py "$RUN_DIR" \
 
 ## 四、算例结果展示（`0 → 300 ms` 流场演化与 AMR 网格叠加对比）
 
-下方依次展示 **全计算域 AMR 网格结构**、**纯净流场（三图并列 + 视频）**、**叠加 AMR 多级分块网格流场（`--grids`，三图并列 + 视频）** 以及 **`z = 0` 全域二维切片前期演化**。所有图片支持**点击放大**，视频采用按需加载与单路互斥播放，流畅不卡顿。
+以下依次展示 **全计算域 AMR 网格结构**、**纯净流场**、**叠加 AMR 多级分块网格流场（`--grids`）** 以及 **`z = 0` 全域二维切片前期演化**。
 
 <div class="row justify-content-sm-center">
   <div class="col-sm-6 mt-3 mt-md-0">
