@@ -191,11 +191,11 @@ pretty_table: true
 
 <div class="row justify-content-sm-center mt-3">
   <div class="col-sm-12">
-    {% include figure.liquid loading="eager" path="assets/img/head_m2_15km/summary.png" title="head_m2_15km 稳态多物理场、AMR 网格层级、三维头部流线与 Cd 收敛曲线总览 (t = 20.00 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
+    {% include figure.liquid loading="eager" path="assets/img/head_m2_15km/summary.png" title="head_m2_15km 稳态马赫数、无量纲压力、静温切片与 Cd 收敛曲线总览 (t = 20.00 ms)" class="img-fluid rounded z-depth-1" zoomable=true %}
   </div>
 </div>
 <div class="caption">
-  稳态时刻（<code>plt00963</code>，<code>t = 20.00 ms</code>）综合诊断总览：包含中心切片无量纲静压、静温、马赫数、叠加五层 AMR 网格框的数值纹影、三维头部几何绕流流线以及 <code>0 → 20 ms</code> 前体阻力系数 <i>C<sub>d</sub></i> 收敛历程。
+  稳态时刻（<code>plt00963</code>，<code>t = 20.00 ms</code>）综合诊断总览：上方依次展示中心切片马赫数、对数无量纲静压 <code>log10(p / p_inf)</code>、静温分布与算例统计摘要，下方展示 <code>0 → 20 ms</code> 前体阻力系数 <i>C<sub>d</sub></i> 收敛历程。
 </div>
 
 ### 3.1 压力流场（Pressure, $$ p / p_\infty $$）
