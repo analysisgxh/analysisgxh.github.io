@@ -1,0 +1,715 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Head M5: 火箭头部 30 km / Ma 5 精细仿真 | xh g </title> <meta name="author" content="xh g"> <meta name="description" content="v5 头部局部计算域 0.5 cm 超高分辨率仿真、贴体弓形激波与激波层剪切涡精细解析"> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://analysisgxh.github.io/projects/head_m5_30km/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">xh</span> g </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item active"> <a class="nav-link" href="/projects/">projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/teaching/">teaching </a> </li> <li class="nav-item "> <a class="nav-link" href="/people/">people </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-nav-dropdown-toggle="true" aria-haspopup="true" aria-expanded="false">submenus </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/books/">bookshelf</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/blog/">blog</a> </div> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Head M5: 火箭头部 30 km / Ma 5 精细仿真</h1> <p class="post-description">v5 头部局部计算域 0.5 cm 超高分辨率仿真、贴体弓形激波与激波层剪切涡精细解析</p> </header> <article> <style>
+  .cfg-grid {
+    margin-top: 0.75rem;
+  }
+  .cfg-col {
+    margin-bottom: 1rem;
+  }
+  .cfg-card {
+    height: 100%;
+    padding: 1rem 1.15rem;
+    border-radius: 10px;
+    background: rgba(127, 127, 127, 0.07);
+    border: 1px solid rgba(127, 127, 127, 0.22);
+  }
+  .cfg-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0.55rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(127, 127, 127, 0.2);
+  }
+  .cfg-card ul {
+    padding-left: 1.15rem;
+    margin-bottom: 0;
+    font-size: 0.88rem;
+    line-height: 1.58;
+  }
+  .cfg-card li {
+    margin-bottom: 0.28rem;
+  }
+  .cfg-card p {
+    font-size: 0.88rem;
+    line-height: 1.58;
+    margin-bottom: 0.45rem;
+  }
+  .cfg-card pre {
+    margin-top: 0.45rem;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+  }
+  .cfg-card-accent {
+    border-left: 4px solid #388bfd;
+  }
+  .cfg-card-warn {
+    border-left: 4px solid #d29922;
+  }
+</style> <p>火箭气动数值模拟项目 <strong>head_m5_30km</strong>（v5 头部局部计算域、30 km 平流层高空、Mach 5.0 高超声速、最细网格 0.5 cm，对应 v4 Case 3 头部高分辨率复现）的几何构型与飞行工况分栏分析、<code class="language-plaintext highlighter-rouge">inputs.used</code> 核心参数配置分栏详解及稳态波系演化结果。</p> <hr> <h2 id="一头部局部构型与飞行工况分栏详解30-km--mach-50">一、头部局部构型与飞行工况分栏详解（30 km / Mach 5.0）</h2> <div class="row cfg-grid"> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>1. 30 km 平流层高超声速自由来流状态</h4> <ul> <li> <b>飞行高度与马赫数</b>：<code>30 km</code>，<code>prob.mach = 5.0</code>（对应 v4 全箭 Case 3 工况的头部超高分辨率算例），来流沿 <code>+y</code> 轴方向（<code>0. 1. 0.</code>）</li> <li> <b>环境静压与静温</b>：<code>prob.p_inf = 1.2e4</code> dyn/cm²（<code>1.2 kPa</code>），<code>prob.T_inf = 227.0 K</code> </li> <li> <b>来流速度与气体属性</b>：<code>U_inf = 1510 m/s</code>，理想气体比热比 <code>γ = 1.4</code>，摩尔质量 <code>μ = 28.97 g/mol</code>，无粘欧拉模型 <code>do_visc = 0</code> </li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>2. v5 火箭头部局部截取构型（Head-Only）</h4> <ul> <li> <b>几何截取策略</b>：加载 <code>0°</code> 收拢构型 <code>rocket.stl</code>（<code>model_v1_0.stl</code>，<code>stl_scale = 0.1</code> mm→cm，<code>stl_center = 0. 0. 0.</code>），下游出口截断于 <code>y = +64 cm</code>（肩后保留约 <code>0.77 m</code> 箭体），尾部舵面（<code>y &gt; 360 cm</code>）置于域外</li> <li> <b>前体精细结构</b>：包含头部激波针（针尖 <code>y = -68.6 cm</code>，<code>r: 0 → 12 cm</code>，针根 <code>y = -48.5 cm</code>）、鼻帽过渡段（<code>y = -47 .. -13 cm</code>，<code>r → 100 cm</code>）及肩部凸缘（<code>y = -13 .. -10 cm</code>，<code>r = 112 cm</code>）</li> <li> <b>前体压差阻力定义</b>：圆柱箭体侧壁平行于来流并穿过超声速出口边界，所测 <i>C<sub>d</sub></i> 纯粹表征<b>前体（头部）高超声速压差阻力系数</b> </li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card cfg-card-warn"> <h4>3. Mach 5 贴体弓形激波与激波层剪切涡特征</h4> <ul> <li> <b>11.5° 小马赫角贴体效应</b>：<code>Ma = 5.0</code> 马赫角仅 <code>arcsin(1/5) = 11.5°</code>，脱体弓形激波显著后移贴体，驻留于激波针尖上游约 <code>5–8 cm</code>（<code>y ≈ -73 .. -76 cm</code>，距入口保留约 <code>115 cm</code> 未扰动自由来流）</li> <li> <b>横向穿出与紧凑盒子</b>：弓形激波在 <code>y = +64 cm</code> 出口面处半径收窄至 <code>r ≈ 232 cm</code>，横向计算域收紧为 <code>x, z ∈ [-320, 320] cm</code>（距侧壁留有约 <code>90 cm</code> 裕度，无侧壁激波反射）</li> <li> <b>针—帽激波干扰涡结构</b>：<code>0.5 cm</code> 细网格清晰解析出激波针前缘压缩波与钝鼻帽强弓形激波相交诱发的 Kelvin–Helmholtz 不稳定剪切涡列</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card cfg-card-accent"> <h4>4. 高波速时间尺度与稳态气动收敛特性</h4> <ul> <li> <b>极短流经时间</b>：轴向域长 <code>2.56 m</code> 在 <code>1510 m/s</code> 来流速度下特征流经时间仅 <code>t_flow ≈ 1.7 ms</code> </li> <li> <b>稳态推进时长</b>：推进至 <code>stop_time = 0.006 s</code>（<code>6.00 ms</code>，<code>plt00533</code>），覆盖约 <code>3.5</code> 倍全域流经时间</li> <li> <b>气动力收敛精度</b>：<code>t &gt; 1.5 ms</code> 后阻力曲线完全平直，后 <code>25 %</code> 时段前体平均阻力系数稳定于 <b><i>C<sub>d</sub></i> = 1.445</b>，脉动幅值低至 <b>Δ<i>C<sub>d</sub></i> = 0.001</b> </li> </ul> </div> </div> </div> <hr> <h2 id="二算例参数配置分栏详解head_m5_30kminputsused">二、算例参数配置分栏详解（<code class="language-plaintext highlighter-rouge">head_m5_30km/inputs.used</code>）</h2> <p><code class="language-plaintext highlighter-rouge">head_m5_30km/inputs.used</code> 由 <code class="language-plaintext highlighter-rouge">tools/run_case.py</code> 组合 v5 <code class="language-plaintext highlighter-rouge">common.inputs</code> 与 <code class="language-plaintext highlighter-rouge">head_M5_30km/inputs</code> 生成，采用<strong>均匀来流冲击启动 + <code class="language-plaintext highlighter-rouge">0.5 ms</code> 渐进过渡保护 + 五层 AMR 紧凑双分区加密（最细 <code class="language-plaintext highlighter-rouge">0.5 cm</code>）</strong>，核心配置分栏如下：</p> <div class="row cfg-grid"> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>1. 均匀来流冲击启动（Impulsive Start）</h4> <ul> <li> <b>初始化模式</b>：<code>prob.init_mode = 0</code>（<code>t = 0</code> 时刻计算域全域赋值为均匀 Mach 5.0 自由来流）</li> <li> <b>方案优势</b>：无需等待入口启动激波扫过计算域，直接由前体壁面反射快速建立贴体脱体弓形激波，缩短非定常过渡时间</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card cfg-card-accent"> <h4>2. v5 启动过渡段渐进保护（Startup Ramp）</h4> <ul> <li> <b>0.5 ms 快速启动窗口</b>：匹配 <code>1510 m/s</code> 高波速（气流约 4 次扫过 <code>60 cm</code> 头部区），设定 <code>cns.startup_time = 5.0e-4 s</code>（<code>0.5 ms</code>），期间强制采用一阶迎风重构（<code>cns.startup_plm_iorder = 1</code>）并将 CFL 由 <code>cns.cfl_start = 0.1</code> 线性提升至 <code>cns.cfl = 0.3</code> </li> <li> <b>稳态二阶高精度重构</b>：<code>t ≥ 0.5 ms</code> 自动切换至二阶 PLM 重构（<code>cns.plm_iorder = 2</code>，<code>plm_theta = 1.0</code> minmod 限制器），开启粗细界面通量重分配 <code>do_reflux = 1</code> </li> <li> <b>小切单元保正修复</b>：<code>tiny_cell_vfrac = 0.2</code>，<code>T_floor = 10.0 K</code>，<code>repair_T_min = 50.0 K</code> </li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>3. STL 嵌入边界高分辨率构建（STL &amp; EB2）</h4> <ul> <li> <b>几何文件与坐标</b>：<code>eb2.geom_type = stl</code>，<code>eb2.stl_file = rocket.stl</code>，<code>eb2.stl_scale = 0.1</code>，<code>eb2.stl_center = 0. 0. 0.</code> </li> <li> <b>0.5 cm 级 EB 参数</b>：<code>eb2.cover_multiple_cuts = 1</code>，<code>eb2.coarse_by_coarsening = 0</code> 各层直接由 STL 精确构建几何，<code>eb2.maxiter = 200</code>，<code>eb2.max_grid_size = 16</code> 降低细层 EB 内存占用</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>4. Mach 5 紧凑头部计算域与边界（Domain &amp; BCs）</h4> <ul> <li> <b>计算域范围</b>：<code>prob_lo = -320. -192. -320.</code>，<code>prob_hi = 320. 64. 320.</code>（cm），物理尺寸 <code>6.40 × 2.56 × 6.40 m</code>（相比 <code>Ma = 2</code> 横向收窄 <code>23 %</code>），<code>is_periodic = 0 0 0</code> </li> <li> <b>基础网格划分</b>：<code>amr.n_cell = 80 32 80</code>，对应粗网格单元尺寸 <b>L0 = 8 cm</b> </li> <li> <b>边界条件配置</b>：<code>cns.lo_bc = 2 1 2</code>（<code>y = -192 cm</code> 自由来流入口 <code>1</code>），<code>cns.hi_bc = 2 2 2</code>（侧壁与 <code>y = +64 cm</code> 超声速零梯度出口 <code>2</code>）</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card cfg-card-accent"> <h4>5. 五层 AMR 网格与紧凑 <code>tip</code> / <code>head</code> 双分区加密</h4> <ul> <li> <b>五层网格分辨率</b>：<code>amr.max_level = 4</code>（<code>ref_ratio = 2 2 2 2</code>），对应 <b>L0–L4 = 8 / 4 / 2 / 1 / 0.5 cm</b>（<code>blocking_factor = 8</code>，<code>max_grid_size = 32</code>，<code>regrid_int = 4</code>，<code>n_error_buf = 2</code>，开启 <code>loadbalance_with_workestimates = 1</code>）</li> <li> <b><code>tip</code> 针尖核心区（0.5 cm）</b>：<code>[-24, 24] × [-80, -40] × [-24, 24]</code> cm 包裹激波针尖与针根，<code>fill_lev = cut_lev = shock_lev = 4</code> 锁定最细 <b>0.5 cm</b> </li> <li> <b><code>head</code> 紧凑激波层区（1–2 cm）</b>：随激波贴体收紧至 <code>[-136, 136] × [-112, 0] × [-136, 136]</code> cm，背景 <code>fill_lev = 2</code>（<b>2 cm</b>），鼻帽/肩部表面与主激波 <code>cut_lev = shock_lev = 3</code>（<b>1 cm</b>）</li> <li> <b>全局判据与显存约束</b>：区外箭体表面 <code>refine_cutcells_max_lev = 3</code>（<b>1 cm</b>）；外翼弓形激波 <code>refine_shock_max_lev = 2</code>（<b>2 cm</b>，<code>pjump = 0.2</code>；测试表明若升至 L3 在 <code>t = 0.4 ms</code> 即超 900 万网格并突破 15 GB 显存）；<code>refine_max_dengrad_lev = 0</code> </li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>6. 高频采样输出与前体阻力积分（Output &amp; Forces）</h4> <ul> <li> <b>推进终止控制</b>：<code>stop_time = 0.006 s</code>（<code>max_step = 10000000</code>）</li> <li> <b>流场与检查点频率</b>：<code>amr.plot_per = 1.0e-4 s</code>（每 <code>0.1 ms</code> 输出一帧流场），<code>amr.check_per = 0.001 s</code>（每 <code>1 ms</code> 保存检查点）</li> <li> <b>前体阻力实时监测</b>：<code>forces.int = 2</code> 持续输出 <code>forces.csv</code>，参考面积 <code>forces.ref_area = 31415.93 cm²</code>（<code>πR²</code>，<code>R = 100 cm</code>）</li> </ul> </div> </div> </div> <hr> <h2 id="三算例结果展示05-cm-分辨率贴体激波与剪切涡流场">三、算例结果展示（0.5 cm 分辨率贴体激波与剪切涡流场）</h2> <h3 id="30-稳态流场定量汇总与综合总览plt00533-t--600-ms">3.0 稳态流场定量汇总与综合总览（<code class="language-plaintext highlighter-rouge">plt00533</code>, <code class="language-plaintext highlighter-rouge">t = 6.00 ms</code>）</h3> <table> <thead> <tr> <th style="text-align: left">指标名称</th> <th style="text-align: left">稳态数值</th> <th style="text-align: left">物理与数值特征说明</th> </tr> </thead> <tbody> <tr> <td style="text-align: left"> <strong>最细网格尺度</strong> \(\Delta x_{\min}\)</td> <td style="text-align: left"> <strong><code class="language-plaintext highlighter-rouge">0.5 cm</code></strong>（L4）</td> <td style="text-align: left">激波针尖、针根与前缘剪切涡达到亚厘米级解析度</td> </tr> <tr> <td style="text-align: left"> <strong>前体平均阻力系数</strong> \(C_d\)（后 25 %）</td> <td style="text-align: left"><strong><code class="language-plaintext highlighter-rouge">1.445</code></strong></td> <td style="text-align: left">纯头部构型（激波针 + 鼻帽 + 肩部凸缘）高超声速压差阻力</td> </tr> <tr> <td style="text-align: left"> <strong>稳态阻力脉动幅值</strong> \(\Delta C_d\)</td> <td style="text-align: left"><strong><code class="language-plaintext highlighter-rouge">0.001</code></strong></td> <td style="text-align: left">波系建立后前体气动载荷极度平稳</td> </tr> <tr> <td style="text-align: left"> <strong>流场最高马赫数</strong> \(\mathrm{Ma}_{\max}\)</td> <td style="text-align: left"><strong><code class="language-plaintext highlighter-rouge">5.00</code></strong></td> <td style="text-align: left">未扰动高超声速自由来流马赫数</td> </tr> <tr> <td style="text-align: left"> <strong>流场最高静温</strong> \(T_{\max}\)</td> <td style="text-align: left"><strong><code class="language-plaintext highlighter-rouge">1521 K</code></strong></td> <td style="text-align: left">鼻帽驻点与针根激波干扰高温区（\(T_\infty = 227.0\text{ K}\)）</td> </tr> <tr> <td style="text-align: left"> <strong>最高无量纲静压</strong> \((p / p_\infty)_{\max}\)</td> <td style="text-align: left"><strong><code class="language-plaintext highlighter-rouge">32.6</code></strong></td> <td style="text-align: left">鼻帽迎风驻点高压（与 <code class="language-plaintext highlighter-rouge">Ma = 5.0</code> 理论 Rayleigh Pitot 驻点压比 <code class="language-plaintext highlighter-rouge">32.65</code> 吻合）</td> </tr> </tbody> </table> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-12"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/summary-480.webp 480w,/assets/img/head_m5_30km/summary-800.webp 800w,/assets/img/head_m5_30km/summary-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/summary.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="head_m5_30km 稳态马赫数、无量纲压力、静温切片与 Cd 收敛曲线总览 (t = 6.00 ms)" data-zoomable="" loading="eager" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 稳态时刻（<code>plt00533</code>，<code>t = 6.00 ms</code>）综合诊断总览：上方依次展示中心切片马赫数、对数无量纲静压 <code>log10(p / p_inf)</code>、静温分布与算例统计摘要，下方展示 <code>0 → 6.0 ms</code> 前体阻力系数 <i>C<sub>d</sub></i> 收敛历程。 </div> <h3 id="31-压力流场pressure-p--p_infty">3.1 压力流场（Pressure, \(p / p_\infty\)）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/pressure/plt00517-480.webp 480w,/assets/img/head_m5_30km/pressure/plt00517-800.webp 800w,/assets/img/head_m5_30km/pressure/plt00517-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/pressure/plt00517.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力流场 plt00517 (t = 5.80 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/pressure/plt00525-480.webp 480w,/assets/img/head_m5_30km/pressure/plt00525-800.webp 800w,/assets/img/head_m5_30km/pressure/plt00525-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/pressure/plt00525.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力流场 plt00525 (t = 5.90 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/pressure/plt00533-480.webp 480w,/assets/img/head_m5_30km/pressure/plt00533-800.webp 800w,/assets/img/head_m5_30km/pressure/plt00533-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/pressure/plt00533.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力流场 plt00533 (t = 6.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 无量纲静压 <i>p / p<sub>∞</sub></i> 对数色标关键帧对比（从左至右：<code>plt00517</code> / <code>5.80 ms</code>、<code>plt00525</code> / <code>5.90 ms</code>、<code>plt00533</code> / <code>6.00 ms</code>）：Mach 5 弓形激波紧贴激波针尖，鼻帽激波层内压比达 <code>32.6</code>，肩部凸缘后方形成低压膨胀阴影区。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-12"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/head_m5_30km/pressure/plt00533.png"> <source src="/assets/video/head_m5_30km/movie_pressure.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 无量纲静压 <i>p / p<sub>∞</sub></i> 演化视频（0 → 6.00 ms）。 </div> <h3 id="32-密度流场density-rho--rho_infty">3.2 密度流场（Density, \(\rho / \rho_\infty\)）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/density/plt00517-480.webp 480w,/assets/img/head_m5_30km/density/plt00517-800.webp 800w,/assets/img/head_m5_30km/density/plt00517-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/density/plt00517.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="密度流场 plt00517 (t = 5.80 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/density/plt00525-480.webp 480w,/assets/img/head_m5_30km/density/plt00525-800.webp 800w,/assets/img/head_m5_30km/density/plt00525-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/density/plt00525.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="密度流场 plt00525 (t = 5.90 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/density/plt00533-480.webp 480w,/assets/img/head_m5_30km/density/plt00533-800.webp 800w,/assets/img/head_m5_30km/density/plt00533-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/density/plt00533.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="密度流场 plt00533 (t = 6.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 无量纲密度 <i>ρ / ρ<sub>∞</sub></i> 对数色标关键帧对比（<code>5.80 ms</code> / <code>5.90 ms</code> / <code>6.00 ms</code>）：弓形激波后密度比超过 <code>5.0</code>（逼近 <code>γ = 1.4</code> 正激波理论值 <code>5.00</code>），肩部凸缘下游圆柱近壁区膨胀稀疏至 <code>0.5 ρ<sub>∞</sub></code> 以下。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-12"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/head_m5_30km/density/plt00533.png"> <source src="/assets/video/head_m5_30km/movie_density.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 无量纲密度 <i>ρ / ρ<sub>∞</sub></i> 演化视频（0 → 6.00 ms）。 </div> <h3 id="33-温度流场temperature-k">3.3 温度流场（Temperature, K）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/temperature/plt00517-480.webp 480w,/assets/img/head_m5_30km/temperature/plt00517-800.webp 800w,/assets/img/head_m5_30km/temperature/plt00517-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/temperature/plt00517.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度流场 plt00517 (t = 5.80 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/temperature/plt00525-480.webp 480w,/assets/img/head_m5_30km/temperature/plt00525-800.webp 800w,/assets/img/head_m5_30km/temperature/plt00525-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/temperature/plt00525.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度流场 plt00525 (t = 5.90 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/temperature/plt00533-480.webp 480w,/assets/img/head_m5_30km/temperature/plt00533-800.webp 800w,/assets/img/head_m5_30km/temperature/plt00533-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/temperature/plt00533.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度流场 plt00533 (t = 6.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 静温分布关键帧对比（<code>5.80 ms</code> / <code>5.90 ms</code> / <code>6.00 ms</code>）：鼻帽前强压缩激波层温度升至 <code>1200–1521 K</code>，激波针两侧清晰可见非定常剪切涡卷起引起的热斑脉动，绕过肩部后降温至 <code>400–600 K</code>。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-12"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/head_m5_30km/temperature/plt00533.png"> <source src="/assets/video/head_m5_30km/movie_temperature.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 静温场演化视频（0 → 6.00 ms）。 </div> <h3 id="34-数值纹影numerical-schlieren">3.4 数值纹影（Numerical Schlieren）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/schlieren/plt00517-480.webp 480w,/assets/img/head_m5_30km/schlieren/plt00517-800.webp 800w,/assets/img/head_m5_30km/schlieren/plt00517-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/schlieren/plt00517.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影 plt00517 (t = 5.80 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/schlieren/plt00525-480.webp 480w,/assets/img/head_m5_30km/schlieren/plt00525-800.webp 800w,/assets/img/head_m5_30km/schlieren/plt00525-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/schlieren/plt00525.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影 plt00525 (t = 5.90 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/head_m5_30km/schlieren/plt00533-480.webp 480w,/assets/img/head_m5_30km/schlieren/plt00533-800.webp 800w,/assets/img/head_m5_30km/schlieren/plt00533-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/head_m5_30km/schlieren/plt00533.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影 plt00533 (t = 6.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 数值纹影关键帧对比：<code>head</code> 分区内 <code>1 cm</code> 与 <code>tip</code> 分区内 <code>0.5 cm</code> 细网格锐利刻画出贴体主弓形激波、激波针侧剪切涡卷起及肩部膨胀波系，外侧同时反映出向 <code>2 cm</code> 翼部激波网格的过渡边界。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-12"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/head_m5_30km/schlieren/plt00533.png"> <source src="/assets/video/head_m5_30km/movie_schlieren.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 数值纹影动态演化视频（0 → 6.00 ms）。 </div> <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const videos = Array.from(document.querySelectorAll("video"));
+    videos.forEach((v) => {
+      v.addEventListener("play", () => {
+        videos.forEach((other) => {
+          if (other !== v && !other.paused) other.pause();
+        });
+      });
+    });
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting && !e.target.paused) e.target.pause();
+        });
+      }, { threshold: 0.1 });
+      videos.forEach((v) => io.observe(v));
+    }
+  });
+</script> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 xh g. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. <style>#navbar a.navbar-brand,#navbar a.navbar-brand span{font-size:0!important;line-height:0!important;}#navbar a.navbar-brand{display:inline-flex;align-items:center;}#navbar a.navbar-brand::after{content:"";display:inline-block;width:152px;height:34px;background:url("/assets/img/signature.png") no-repeat left center/contain;}html[data-theme="dark"] #navbar a.navbar-brand::after{filter:invert(1);}</style> </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script defer src="/assets/js/table-engine.js?v=c52129a997ab5b8a3622ec0506761421" type="text/javascript"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "projects",
+          description: "A growing collection of your cool projects.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "This is a description of the page. You can modify it in '_pages/cv.md'. You can also change or remove the top pdf download button.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-teaching",
+          title: "teaching",
+          description: "Course materials, schedules, and resources for classes taught.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/teaching/";
+          },
+        },{id: "nav-people",
+          title: "people",
+          description: "members of the lab or group",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/people/";
+          },
+        },{id: "dropdown-bookshelf",
+              title: "bookshelf",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/books/";
+              },
+            },{id: "dropdown-blog",
+              title: "blog",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/blog/";
+              },
+            },{id: "post-a-post-with-marimo-snippets",
+        
+          title: "a post with marimo snippets",
+        
+        description: "running Python in the browser with marimo",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/marimo/";
+          
+        },
+      },{id: "post-a-post-with-plotly-js",
+        
+          title: "a post with plotly.js",
+        
+        description: "this is what included plotly.js code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/plotly/";
+          
+        },
+      },{id: "post-a-post-with-image-galleries",
+        
+          title: "a post with image galleries",
+        
+        description: "this is what included image galleries could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/photo-gallery/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-a-post-with-tabs",
+        
+          title: "a post with tabs",
+        
+        description: "this is what included tabs in a post could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/tabs/";
+          
+        },
+      },{id: "post-a-post-with-typograms",
+        
+          title: "a post with typograms",
+        
+        description: "this is what included typograms code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/typograms/";
+          
+        },
+      },{id: "post-a-post-that-can-be-cited",
+        
+          title: "a post that can be cited",
+        
+        description: "this is what a post that can be cited looks like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/post-citation/";
+          
+        },
+      },{id: "post-a-post-with-pseudo-code",
+        
+          title: "a post with pseudo code",
+        
+        description: "this is what included pseudo code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/pseudocode/";
+          
+        },
+      },{id: "post-a-post-with-code-diff",
+        
+          title: "a post with code diff",
+        
+        description: "this is how you can display code diffs",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/code-diff/";
+          
+        },
+      },{id: "post-a-post-with-advanced-image-components",
+        
+          title: "a post with advanced image components",
+        
+        description: "this is what advanced image components could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/advanced-images/";
+          
+        },
+      },{id: "post-a-post-with-vega-lite",
+        
+          title: "a post with vega lite",
+        
+        description: "this is what included vega lite code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/vega-lite/";
+          
+        },
+      },{id: "post-a-post-with-geojson",
+        
+          title: "a post with geojson",
+        
+        description: "this is what included geojson code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/geojson-map/";
+          
+        },
+      },{id: "post-a-post-with-echarts",
+        
+          title: "a post with echarts",
+        
+        description: "this is what included echarts code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/echarts/";
+          
+        },
+      },{id: "post-a-post-with-chart-js",
+        
+          title: "a post with chart.js",
+        
+        description: "this is what included chart.js code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/chartjs/";
+          
+        },
+      },{id: "post-a-post-with-tikzjax",
+        
+          title: "a post with TikZJax",
+        
+        description: "this is what included TikZ code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/tikzjax/";
+          
+        },
+      },{id: "post-a-post-with-bibliography",
+        
+          title: "a post with bibliography",
+        
+        description: "an example of a blog post with bibliography",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/post-bibliography/";
+          
+        },
+      },{id: "post-a-post-with-jupyter-notebook",
+        
+          title: "a post with jupyter notebook",
+        
+        description: "an example of a blog post with jupyter notebook",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/jupyter-notebook/";
+          
+        },
+      },{id: "post-a-post-with-custom-blockquotes",
+        
+          title: "a post with custom blockquotes",
+        
+        description: "an example of a blog post with custom blockquotes",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/custom-blockquotes/";
+          
+        },
+      },{id: "post-a-post-with-table-of-contents-on-a-sidebar",
+        
+          title: "a post with table of contents on a sidebar",
+        
+        description: "an example of a blog post with table of contents on a sidebar",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/sidebar-table-of-contents/";
+          
+        },
+      },{id: "post-a-post-with-audios",
+        
+          title: "a post with audios",
+        
+        description: "this is what included audios could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/audios/";
+          
+        },
+      },{id: "post-a-post-with-videos",
+        
+          title: "a post with videos",
+        
+        description: "this is what included videos could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/videos/";
+          
+        },
+      },{id: "post-displaying-beautiful-interactive-tables",
+        
+          title: "displaying beautiful interactive tables",
+        
+        description: "an example of how to use interactive tables in al-folio",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/tables/";
+          
+        },
+      },{id: "post-a-post-with-table-of-contents",
+        
+          title: "a post with table of contents",
+        
+        description: "an example of a blog post with table of contents",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/table-of-contents/";
+          
+        },
+      },{id: "post-a-post-with-giscus-comments",
+        
+          title: "a post with giscus comments",
+        
+        description: "an example of a blog post with giscus comments",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/giscus-comments/";
+          
+        },
+      },{id: "post-یک-نوشتهٔ-راست-چین",
+        
+          title: "یک نوشتهٔ راست‌چین",
+        
+        description: "نمونه‌ای از پشتیبانی زبان‌های راست‌چین",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/rtl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-a-post-with-redirect",
+        
+          title: "a post with redirect",
+        
+        description: "you can also redirect to assets like pdf",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/assets/pdf/example_pdf.pdf";
+          
+        },
+      },{id: "post-a-post-with-diagrams",
+        
+          title: "a post with diagrams",
+        
+        description: "an example of a blog post with diagrams",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/diagrams/";
+          
+        },
+      },{id: "post-a-distill-style-blog-post",
+        
+          title: "a distill-style blog post",
+        
+        description: "an example of a distill-style blog post and main elements",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/distill/";
+          
+        },
+      },{id: "post-a-post-with-twitter",
+        
+          title: "a post with twitter",
+        
+        description: "an example of a blog post with twitter",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/twitter/";
+          
+        },
+      },{id: "post-a-post-with-disqus-comments",
+        
+          title: "a post with disqus comments",
+        
+        description: "an example of a blog post with disqus comments",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/disqus-comments/";
+          
+        },
+      },{id: "post-a-post-with-math",
+        
+          title: "a post with math",
+        
+        description: "an example of a blog post with some math",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/math/";
+          
+        },
+      },{id: "post-a-post-with-code",
+        
+          title: "a post with code",
+        
+        description: "an example of a blog post with some code",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/code/";
+          
+        },
+      },{id: "post-a-post-with-images",
+        
+          title: "a post with images",
+        
+        description: "this is what included images could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/images/";
+          
+        },
+      },{id: "post-a-post-with-formatting-and-links",
+        
+          title: "a post with formatting and links",
+        
+        description: "march & april, looking forward to summer",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/formatting-and-links/";
+          
+        },
+      },{id: "books-the-godfather",
+          title: 'The Godfather',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/the_godfather/";
+            },},{id: "news-a-simple-inline-announcement",
+          title: 'A simple inline announcement.',
+          description: "",
+          section: "News",},{id: "news-a-long-announcement-with-details",
+          title: 'A long announcement with details',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/announcement_2/";
+            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
+          title: 'A simple inline announcement with Markdown emoji! <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png" height="20" width="20"> <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">',
+          description: "",
+          section: "News",},{id: "projects-project-1",
+          title: 'project 1',
+          description: "with background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/1_project/";
+            },},{id: "projects-project-2",
+          title: 'project 2',
+          description: "a project with a background image and giscus comments",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/2_project/";
+            },},{id: "projects-project-3-with-very-long-name",
+          title: 'project 3 with very long name',
+          description: "a project that redirects to another website",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/3_project/";
+            },},{id: "projects-project-4",
+          title: 'project 4',
+          description: "another without an image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/4_project/";
+            },},{id: "projects-project-5",
+          title: 'project 5',
+          description: "a project with a background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/5_project/";
+            },},{id: "projects-project-6",
+          title: 'project 6',
+          description: "a project with no image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/6_project/";
+            },},{id: "projects-project-7",
+          title: 'project 7',
+          description: "with background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/7_project/";
+            },},{id: "projects-project-8",
+          title: 'project 8',
+          description: "an other project with a background image and giscus comments",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/8_project/";
+            },},{id: "projects-project-9",
+          title: 'project 9',
+          description: "another project with an image 🎉",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/9_project/";
+            },},{id: "projects-case-1-火箭-100-km-ma-27-再入仿真",
+          title: 'Case 1: 火箭 100 km / Ma 27 再入仿真',
+          description: "60° 舵面极高马赫数强激波仿真、稀薄过渡流工况分析、近真空保护与流场演化展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/case1/";
+            },},{id: "projects-case-2-火箭-60-km-ma-16-高空仿真",
+          title: 'Case 2: 火箭 60 km / Ma 16 高空仿真',
+          description: "60° 舵面高超声速强激波仿真、近真空数值保护配置与流场演化展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/case2/";
+            },},{id: "projects-case-3-火箭-30-km-ma-5-gpu-仿真",
+          title: 'Case 3: 火箭 30 km / Ma 5 GPU 仿真',
+          description: "60° 舵面高超声速流场、AMR 显存诊断调优（inputs2 → inputs3）与激波演化展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/case3/";
+            },},{id: "projects-case-4-火箭-10-km-ma-1-0-跨声速仿真",
+          title: 'Case 4: 火箭 10 km / Ma 1.0 跨声速仿真',
+          description: "60° 舵面跨声速气动仿真、AMR 显存分析、chk00672 断点续算与网格叠加流场展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/case4/";
+            },},{id: "projects-case-5-火箭-1-km-ma-0-3-gpu-仿真",
+          title: 'Case 5: 火箭 1 km / Ma 0.3 GPU 仿真',
+          description: "60° 舵面 AMReX-CNS 气动仿真、AMR 加密策略与 1.5 s 全流场演化展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/case5/";
+            },},{id: "projects-head-m2-火箭头部-15-km-ma-2-精细仿真",
+          title: 'Head M2: 火箭头部 15 km / Ma 2 精细仿真',
+          description: "v5 头部局部计算域 0.5 cm 超高分辨率仿真、冲击启动渐进控制与脱体激波演化展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/head_m2_15km/";
+            },},{id: "projects-head-m5-火箭头部-30-km-ma-5-精细仿真",
+          title: 'Head M5: 火箭头部 30 km / Ma 5 精细仿真',
+          description: "v5 头部局部计算域 0.5 cm 超高分辨率仿真、贴体弓形激波与激波层剪切涡精细解析",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/head_m5_30km/";
+            },},{id: "teachings-data-science-fundamentals",
+          title: 'Data Science Fundamentals',
+          description: "This course covers the foundational aspects of data science, including data collection, cleaning, analysis, and visualization. Students will learn practical skills for working with real-world datasets.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/data-science-fundamentals/";
+            },},{id: "teachings-introduction-to-machine-learning",
+          title: 'Introduction to Machine Learning',
+          description: "This course provides an introduction to machine learning concepts, algorithms, and applications. Students will learn about supervised and unsupervised learning, model evaluation, and practical implementations.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/introduction-to-machine-learning/";
+            },},{
+        id: 'social-cv',
+        title: 'CV',
+        section: 'Socials',
+        handler: () => {
+          window.open("/assets/pdf/example_pdf.pdf", "_blank");
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%79%6F%75@%65%78%61%6D%70%6C%65.%63%6F%6D", "_blank");
+        },
+      },{
+        id: 'social-inspire',
+        title: 'Inspire HEP',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://inspirehep.net/authors/1010907", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+        id: 'social-scholar',
+        title: 'Google Scholar',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://scholar.google.com/citations?user=qc6CJjYAAAAJ", "_blank");
+        },
+      },{
+        id: 'social-custom_social',
+        title: 'Custom_social',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.alberteinstein.com/", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>
