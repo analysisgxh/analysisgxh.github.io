@@ -1,0 +1,721 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Case 4: 火箭 10 km / Ma 1.0 跨声速仿真 | xh g </title> <meta name="author" content="xh g"> <meta name="description" content="60° 舵面跨声速气动仿真、AMR 显存分析、chk00672 断点续算与网格叠加流场展示"> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://analysisgxh.github.io/projects/case4/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">xh</span> g </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item active"> <a class="nav-link" href="/projects/">projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/teaching/">teaching </a> </li> <li class="nav-item "> <a class="nav-link" href="/people/">people </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-nav-dropdown-toggle="true" aria-haspopup="true" aria-expanded="false">submenus </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/books/">bookshelf</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/blog/">blog</a> </div> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Case 4: 火箭 10 km / Ma 1.0 跨声速仿真</h1> <p class="post-description">60° 舵面跨声速气动仿真、AMR 显存分析、chk00672 断点续算与网格叠加流场展示</p> </header> <article> <style>
+  .cfg-grid {
+    margin-top: 0.75rem;
+  }
+  .cfg-col {
+    margin-bottom: 1rem;
+  }
+  .cfg-card {
+    height: 100%;
+    padding: 1rem 1.15rem;
+    border-radius: 10px;
+    background: rgba(127, 127, 127, 0.07);
+    border: 1px solid rgba(127, 127, 127, 0.22);
+  }
+  .cfg-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0.55rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(127, 127, 127, 0.2);
+  }
+  .cfg-card ul {
+    padding-left: 1.15rem;
+    margin-bottom: 0;
+    font-size: 0.88rem;
+    line-height: 1.58;
+  }
+  .cfg-card li {
+    margin-bottom: 0.28rem;
+  }
+  .cfg-card p {
+    font-size: 0.88rem;
+    line-height: 1.58;
+    margin-bottom: 0.45rem;
+  }
+  .cfg-card pre {
+    margin-top: 0.45rem;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+  }
+  .cfg-card-warn {
+    border-left: 4px solid #d29922;
+  }
+  .cfg-card-ok {
+    border-left: 4px solid #2ea043;
+  }
+</style> <p>本页整理自火箭气动数值模拟项目 <strong>Case 4</strong>（10 km 高度、Mach 1.0 跨声速、60° 气动减速舵面）的实际运行参数 <code class="language-plaintext highlighter-rouge">inputs.used</code>、气体状态方程核验、16 GB GPU 显存瓶颈分析与 <code class="language-plaintext highlighter-rouge">chk00672</code>（<code class="language-plaintext highlighter-rouge">0.12 s</code> → <code class="language-plaintext highlighter-rouge">0.30 s</code>）断点续算流程，以及纯净流场和 <strong>AMR 网格叠加（<code class="language-plaintext highlighter-rouge">--grids</code>）</strong> 全套可视化结果。</p> <hr> <h2 id="一算例工况与气体状态方程eos核验">一、算例工况与气体状态方程（EOS）核验</h2> <div class="row justify-content-sm-center"> <div class="col-sm-12 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case5_stl_views-480.webp 480w,/assets/img/case5_stl_views-800.webp 800w,/assets/img/case5_stl_views-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case5_stl_views.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="火箭不同舵面展开角 STL 几何构型（0° / 30° / 60° / 90°）" data-zoomable="" loading="eager" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 火箭减速舵面四种展开角 STL 模型对比（点击可放大）。Case 4 采用 60° 展开角构型 <code>model_v1_60.stl</code>，来流沿 <code>+y</code> 方向以跨声速 Mach 1.0 入射。 </div> <p>求解器采用理想空气状态方程（\(\gamma = 1.4,\ \mu = 28.97\)），由自由来流输入（<code class="language-plaintext highlighter-rouge">prob.mach = 1.0</code>，<code class="language-plaintext highlighter-rouge">prob.p_inf = 2.64e5</code> dyn/cm²，<code class="language-plaintext highlighter-rouge">prob.T_inf = 222.5</code> K）导出的热力学状态与标准飞行工况表高度吻合：</p> <table> <thead> <tr> <th style="text-align: left">物理参数</th> <th style="text-align: center">飞行工况表目标值（Case 4, 10 km）</th> <th style="text-align: center">实际配置 <code class="language-plaintext highlighter-rouge">inputs.used</code> 计算值</th> </tr> </thead> <tbody> <tr> <td style="text-align: left"> <strong>来流马赫数</strong> \(\text{Ma}_\infty\)</td> <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td> <td style="text-align: center"><strong><code class="language-plaintext highlighter-rouge">1.0</code></strong></td> </tr> <tr> <td style="text-align: left"> <strong>来流静温</strong> \(T_\infty\)</td> <td style="text-align: center"><code class="language-plaintext highlighter-rouge">222.5 K</code></td> <td style="text-align: center"><strong><code class="language-plaintext highlighter-rouge">222.5 K</code></strong></td> </tr> <tr> <td style="text-align: left"> <strong>来流静压</strong> \(p_\infty\)</td> <td style="text-align: center"><code class="language-plaintext highlighter-rouge">26.4 kPa</code></td> <td style="text-align: center"> <strong><code class="language-plaintext highlighter-rouge">26.4 kPa</code></strong>（<code class="language-plaintext highlighter-rouge">2.64e5 dyn/cm²</code>）</td> </tr> <tr> <td style="text-align: left"> <strong>来流声速</strong> \(c_\infty\)</td> <td style="text-align: center"><code class="language-plaintext highlighter-rouge">299 m/s</code></td> <td style="text-align: center"><strong><code class="language-plaintext highlighter-rouge">299.001 m/s</code></strong></td> </tr> <tr> <td style="text-align: left"> <strong>来流速度</strong> \(U_\infty\)</td> <td style="text-align: center"><code class="language-plaintext highlighter-rouge">300 m/s</code></td> <td style="text-align: center"><strong><code class="language-plaintext highlighter-rouge">299.001 m/s</code></strong></td> </tr> <tr> <td style="text-align: left"> <strong>来流密度</strong> \(\rho_\infty\)</td> <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0.413 kg/m³</code></td> <td style="text-align: center"><strong><code class="language-plaintext highlighter-rouge">0.413415 kg/m³</code></strong></td> </tr> </tbody> </table> <hr> <h2 id="二case-4-实际运行参数分栏详解case4inputsused">二、Case 4 实际运行参数分栏详解（<code class="language-plaintext highlighter-rouge">CASE4/inputs.used</code>）</h2> <p>本次算例实际使用的 <code class="language-plaintext highlighter-rouge">inputs.used</code> 复用 Case 5 已验证的 60° 舵面 4 cm 网格框架并替换为 Case 4 跨声速物理条件（独立直接读取，不拼接 <code class="language-plaintext highlighter-rouge">common.inputs</code>），以下按六大功能模块<strong>分栏讲出</strong>：</p> <div class="row cfg-grid"> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>1. 自由来流与初始化模式（Free Stream &amp; Init）</h4> <ul> <li> <b>跨声速来流</b>：<code>prob.mach = 1.0</code>，<code>prob.p_inf = 2.64e5</code> dyn/cm²，<code>prob.T_inf = 222.5</code> K，流向 <code>+y</code>（<code>0. 1. 0.</code>）</li> <li> <b>实际初始化设置</b>：<code>prob.init_mode = 1</code>（域内初始静止，由入口来流推进发展；保留备用参数 <code>init_front = -120.</code>、<code>init_vel_frac = 0.5</code>）</li> <li> <b>初始化对比说明</b>：与原 v4 Case 4 的均匀来流（<code>init_mode = 0</code>）不同，<code>init_mode = 1</code> 在跨声速下会在入口附近形成驻留启动波，使箭体前有效来流马赫数降低</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>2. 60° 舵面几何与嵌入式边界（STL &amp; EB2）</h4> <ul> <li> <b>STL 几何输入</b>：<code>eb2.geom_type = stl</code>，运行目录内拷贝 <code>geometry/model_v1_60.stl</code> 为 <code>rocket.stl</code> </li> <li> <b>坐标缩放与对中</b>：<code>eb2.stl_scale = 0.1</code>（mm → cm），<code>eb2.stl_center = 0. 40.91 0.</code>，<code>stl_reverse_normal = 0</code> </li> <li> <b>EB 构建方式</b>：<code>eb2.cover_multiple_cuts = 1</code>，<code>eb2.coarse_by_coarsening = 0</code>（各加密层直接解析 STL，保持默认 <code>eb2.max_grid_size</code>）</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>3. 大尺度计算域与边界条件（Domain &amp; BCs）</h4> <ul> <li> <b>计算域范围</b>：<code>x, z ∈ [-1024, 1024]</code> cm，<code>y ∈ [-1024, 2048]</code> cm（物理尺寸 <code>20.48 × 30.72 × 20.48 m</code>，适应跨声速大范围扰动传播）</li> <li> <b>基础网格划分</b>：笛卡尔非周期网格（<code>coord_sys = 0</code>），粗网格 <code>amr.n_cell = 64 96 64</code>，L0 分辨率 <b>32 cm</b> </li> <li> <b>边界设定</b>：<code>cns.lo_bc = 2 1 2</code>（<code>y = -1024 cm</code> 来流入口 <code>1</code>），<code>cns.hi_bc = 2 2 2</code>（侧壁与出口零梯度外流 <code>2</code>）</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>4. 欧拉求解器与切割小单元修复（Euler &amp; Repair）</h4> <ul> <li> <b>控制方程</b>：无粘可压缩欧拉方程（<code>cns.do_visc = 0</code>，<code>eos_gamma = 1.4</code>，<code>eos_mu = 28.97</code>）</li> <li> <b>空间重构与时间步</b>：2 阶 PLM（<code>plm_iorder = 2</code>，<code>plm_theta = 1.0</code> minmod 限制器），<code>cfl = 0.3</code>，开启通量重分配与层间守恒修正 <code>do_reflux = 1</code> </li> <li> <b>小单元保护阈值</b>：<code>tiny_cell_vfrac = 0.1</code>，温度下限 <code>T_floor = 10.0 K</code>，小单元温度修复阈值 <code>repair_T_min = 50.0 K</code> </li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>5. AMR 四层网格与内存池配置（AMR &amp; Arena）</h4> <ul> <li> <b>网格层级</b>：<code>amr.max_level = 3</code>，<code>ref_ratio = 2 2 2</code>，对应四层分辨率 <b>L0–L3 = 32 / 16 / 8 / 4 cm</b> </li> <li> <b>分块与重构控制</b>：<code>max_grid_size = 32</code>，<code>blocking_factor = 8</code>，<code>regrid_int = 4 4 4</code>，<code>n_error_buf = 2 2 2 2</code>，<code>grid_eff = 0.7</code> </li> <li> <b>负载均衡与内存池</b>：<code>loadbalance_with_workestimates = 1</code>（每 10 步更新 L0）；<code>amrex.the_arena_init_size = 536870912</code>（512 MiB 初始分配池）</li> </ul> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card"> <h4>6. 三重网格加密与采样输出（Refinement &amp; I/O）</h4> <ul> <li> <b>表面与密度差加密</b>：<code>refine_cutcells = 1</code>（最高 <b>L3：4 cm</b>）；密度差加密 <code>refine_max_dengrad_lev = 3</code>（阈值 <code>1.1e-5</code>），<code>refine_shock_max_lev = 0</code> </li> <li> <b>固定加密盒</b>：<code>refine_box_lo_0 = -256. -192. -256.</code> 至 <code>hi_0 = 256. 1280. 256.</code> cm（完整覆盖箭体与尾流区）</li> <li> <b>输出与续算时长</b>：<code>plot_per = 0.001 s</code>，<code>check_per = 0.1 s</code>，每 2 步输出 <code>forces.csv</code>（<code>ref_area = 31415.93 cm²</code>）；首段 <code>0.12 s</code>，续算至 <code>0.30 s</code> </li> </ul> </div> </div> </div> <hr> <h2 id="三显存瓶颈分析与两阶段续算方案logcase4-分栏复盘">三、显存瓶颈分析与两阶段续算方案（<code class="language-plaintext highlighter-rouge">LOGCASE4</code> 分栏复盘）</h2> <div class="row cfg-grid"> <div class="col-md-6 cfg-col"> <div class="cfg-card cfg-card-warn"> <h4>1. 16 GB 单卡 GPU 显存瓶颈与降显存备选配置</h4> <p>测试表明单卡显存耗尽并非 <code>512 MiB</code> 初始内存池设置错误：AMReX 已实际占用约 <b>15 GB</b>，继续申请 <code>8 MiB</code> 时触发上限。原因在于大固定框全量细化至 4 cm（L3）仅框内就包含约 <b>603 万网格单元</b>。</p> <p class="mb-1">若需在 16 GB 单卡上全程独立运行，可保持壁面 <b>4 cm</b> 不变，将固定框与密度判据上限降为 <b>8 cm（L2）</b>：</p> <pre><code>cns.refine_cutcells_max_lev = 3   # 火箭表面保持 4 cm
+cns.refine_max_dengrad_lev  = 2   # 密度判据上限降为 8 cm
+cns.zones = body                  # 固定框填充上限降为 L2 (8 cm)
+cns.zone.body.lo = -256. -192. -256.
+cns.zone.body.hi =  256. 1280.  256.
+cns.zone.body.fill_lev = 2</code></pre> </div> </div> <div class="col-md-6 cfg-col"> <div class="cfg-card cfg-card-ok"> <h4>2. 完整 4 cm 精度断点续算方案（<code>chk00672</code> → <code>0.3 s</code>）</h4> <p>为严格保留原 <code>inputs.used</code> 的全套 <b>4 cm 固定框高精度网格</b>，在完成前 <code>0.12 s</code>（生成检查点 <code>chk00672</code>）后，使用 <b>CPU 20 进程 MPI</b> 无缝续算至目标 <code>0.30 s</code>（<code>plt01667</code>）：</p> <pre><code class="language-bash">RUN_DIR="$PROJECT_DIR/results/case4_10km_M1_f60_cpu_20261126_133245"
+EXE="$PROJECT_DIR/build_cpu/bin/rocket_cns"
+export OMP_NUM_THREADS=1
+
+cd "$RUN_DIR"
+mpirun -np 20 "$EXE" inputs.used \
+    amr.restart=chk00672 \
+    stop_time=0.3 \
+    2&gt;&amp;1 | tee "run_restart_$(date +%Y%m%d_%H%M%S).log"</code></pre> </div> </div> </div> <h3 id="后处理与-amr-网格框叠加--grids生成命令">后处理与 AMR 网格框叠加（<code class="language-plaintext highlighter-rouge">--grids</code>）生成命令</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda activate rocket-post
+<span class="nv">RUN_DIR</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PWD</span><span class="s2">/results/case4_10km_M1_f60_cpu_20261126_133245"</span>
+
+<span class="c"># 1. 生成 z=0 截面全时段帧图（同时支持纯净流场与 --grids 叠加 AMR 分块线）</span>
+python3 tools/post/make_frames.py <span class="s2">"</span><span class="nv">$RUN_DIR</span><span class="s2">"</span> <span class="se">\</span>
+    <span class="nt">--vars</span> mach pressure density temperature schlieren <span class="se">\</span>
+    <span class="nt">--title</span> <span class="s2">"Case4: Mach 1, 10 km, flap 60 deg"</span> <span class="se">\</span>
+    <span class="nt">--jobs</span> 4 <span class="nt">--grids</span> <span class="nt">--overwrite</span>
+
+<span class="c"># 2. 按 15 fps 分别合成 MP4 与 GIF 动画</span>
+python3 tools/post/make_movie.py <span class="s2">"</span><span class="nv">$RUN_DIR</span><span class="s2">"</span> <span class="se">\</span>
+    <span class="nt">--vars</span> mach_grids pressure_grids density_grids temperature_grids schlieren_grids <span class="se">\</span>
+    <span class="nt">--fps</span> 15
+</code></pre></div></div> <hr> <h2 id="四算例结果展示0--300-ms-流场演化与-amr-网格叠加对比">四、算例结果展示（<code class="language-plaintext highlighter-rouge">0 → 300 ms</code> 流场演化与 AMR 网格叠加对比）</h2> <p>下方依次展示 <strong>全计算域 AMR 网格结构</strong>、<strong>纯净流场（三图并列 + 视频）</strong>、<strong>叠加 AMR 多级分块网格流场（<code class="language-plaintext highlighter-rouge">--grids</code>，三图并列 + 视频）</strong> 以及 <strong><code class="language-plaintext highlighter-rouge">z = 0</code> 全域二维切片前期演化</strong>。所有图片支持<strong>点击放大</strong>，视频采用按需加载与单路互斥播放，流畅不卡顿。</p> <div class="row justify-content-sm-center"> <div class="col-sm-6 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/mach_grids-480.webp 480w,/assets/img/case4/mach_grids-800.webp 800w,/assets/img/case4/mach_grids-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/mach_grids.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="全计算域 z=0 截面马赫数与 AMR 多级网格框分布 (plt00672, t=0.12 s)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 续算起点检查点时刻（<code>plt00672</code>，<code>t = 0.12 s</code>，<code>z = 0 cm</code>）全计算域马赫数与 L1–L3 自适应网格分块布局：核心加密盒与入口波面加密层清晰可见。 </div> <hr> <h3 id="a-纯净流场与-c_d-时历曲线29812--29903--30000-ms">A. 纯净流场与 \(C_d\) 时历曲线（<code class="language-plaintext highlighter-rouge">298.12</code> / <code class="language-plaintext highlighter-rouge">299.03</code> / <code class="language-plaintext highlighter-rouge">300.00 ms</code>）</h3> <h4 id="41-马赫数流场mach-number">4.1 马赫数流场（Mach Number）</h4> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/mach/plt01656-480.webp 480w,/assets/img/case4/mach/plt01656-800.webp 800w,/assets/img/case4/mach/plt01656-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/mach/plt01656.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="马赫数 plt01656 (t = 298.12 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/mach/plt01661-480.webp 480w,/assets/img/case4/mach/plt01661-800.webp 800w,/assets/img/case4/mach/plt01661-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/mach/plt01661.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="马赫数 plt01661 (t = 299.03 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/mach/plt01667-480.webp 480w,/assets/img/case4/mach/plt01667-800.webp 800w,/assets/img/case4/mach/plt01667-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/mach/plt01667.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="马赫数 plt01667 (t = 300.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 马赫数分布关键帧并列对比（从左至右：<code>plt01656</code> / <code>298.12 ms</code>、<code>plt01661</code> / <code>299.03 ms</code>、<code>plt01667</code> / <code>300.00 ms</code>）。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/mach/plt01667.png"> <source src="/assets/video/case4/movie_mach.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 马赫数流场与 <i>C<sub>d</sub></i> 同步演化视频（0 → 300 ms）。 </div> <h4 id="42-压力流场pressure-p--p_infty">4.2 压力流场（Pressure, \(p / p_\infty\)）</h4> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/pressure/plt01656-480.webp 480w,/assets/img/case4/pressure/plt01656-800.webp 800w,/assets/img/case4/pressure/plt01656-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/pressure/plt01656.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力流场 plt01656 (t = 298.12 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/pressure/plt01661-480.webp 480w,/assets/img/case4/pressure/plt01661-800.webp 800w,/assets/img/case4/pressure/plt01661-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/pressure/plt01661.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力流场 plt01661 (t = 299.03 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/pressure/plt01667-480.webp 480w,/assets/img/case4/pressure/plt01667-800.webp 800w,/assets/img/case4/pressure/plt01667-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/pressure/plt01667.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力流场 plt01667 (t = 300.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 无量纲静压 <i>p / p<sub>∞</sub></i> 分布关键帧对比（<code>298.12 ms</code> / <code>299.03 ms</code> / <code>300.00 ms</code>），鼻锥滞止高压区、60° 舵面迎风高压与背风低压涡结构清晰。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/pressure/plt01667.png"> <source src="/assets/video/case4/movie_pressure.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 无量纲静压 <i>p / p<sub>∞</sub></i> 演化视频（0 → 300 ms）。 </div> <h4 id="43-密度流场density-rho--rho_infty">4.3 密度流场（Density, \(\rho / \rho_\infty\)）</h4> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/density/plt01656-480.webp 480w,/assets/img/case4/density/plt01656-800.webp 800w,/assets/img/case4/density/plt01656-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/density/plt01656.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="密度流场 plt01656 (t = 298.12 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/density/plt01661-480.webp 480w,/assets/img/case4/density/plt01661-800.webp 800w,/assets/img/case4/density/plt01661-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/density/plt01661.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="密度流场 plt01661 (t = 299.03 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/density/plt01667-480.webp 480w,/assets/img/case4/density/plt01667-800.webp 800w,/assets/img/case4/density/plt01667-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/density/plt01667.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="密度流场 plt01667 (t = 300.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 无量纲密度 <i>ρ / ρ<sub>∞</sub></i> 分布关键帧对比（<code>298.12 ms</code> / <code>299.03 ms</code> / <code>300.00 ms</code>）。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/density/plt01667.png"> <source src="/assets/video/case4/movie_density.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 无量纲密度 <i>ρ / ρ<sub>∞</sub></i> 演化视频（0 → 300 ms）。 </div> <h4 id="44-温度流场temperature-k">4.4 温度流场（Temperature, K）</h4> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/temperature/plt01656-480.webp 480w,/assets/img/case4/temperature/plt01656-800.webp 800w,/assets/img/case4/temperature/plt01656-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/temperature/plt01656.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度流场 plt01656 (t = 298.12 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/temperature/plt01661-480.webp 480w,/assets/img/case4/temperature/plt01661-800.webp 800w,/assets/img/case4/temperature/plt01661-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/temperature/plt01661.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度流场 plt01661 (t = 299.03 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/temperature/plt01667-480.webp 480w,/assets/img/case4/temperature/plt01667-800.webp 800w,/assets/img/case4/temperature/plt01667-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/temperature/plt01667.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度流场 plt01667 (t = 300.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 静温分布关键帧对比（<code>298.12 ms</code> / <code>299.03 ms</code> / <code>300.00 ms</code>），清晰呈现非定常高温尾流涡街结构。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/temperature/plt01667.png"> <source src="/assets/video/case4/movie_temperature.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 静温场演化视频（0 → 300 ms）。 </div> <h4 id="45-数值纹影numerical-schlieren">4.5 数值纹影（Numerical Schlieren）</h4> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/schlieren/plt01656-480.webp 480w,/assets/img/case4/schlieren/plt01656-800.webp 800w,/assets/img/case4/schlieren/plt01656-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/schlieren/plt01656.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影 plt01656 (t = 298.12 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/schlieren/plt01661-480.webp 480w,/assets/img/case4/schlieren/plt01661-800.webp 800w,/assets/img/case4/schlieren/plt01661-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/schlieren/plt01661.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影 plt01661 (t = 299.03 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/schlieren/plt01667-480.webp 480w,/assets/img/case4/schlieren/plt01667-800.webp 800w,/assets/img/case4/schlieren/plt01667-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/schlieren/plt01667.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影 plt01667 (t = 300.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 数值纹影关键帧对比（深色代表强密度梯度），精细刻画 60° 舵面分离剪切层与尾流涡系耗散过程。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/schlieren/plt01667.png"> <source src="/assets/video/case4/movie_schlieren.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 数值纹影演化视频（0 → 300 ms）。 </div> <hr> <h3 id="b-叠加-amr-自适应网格分块框流场展示--grids">B. 叠加 AMR 自适应网格分块框流场展示（<code class="language-plaintext highlighter-rouge">--grids</code>）</h3> <p>叠加各层级 <code class="language-plaintext highlighter-rouge">32³</code> 网格块边界（红/黄/绿线框对应由粗到细的 AMR 层级），直观验证密度梯度判据与固定加密盒对尾流涡街的动态捕获能力：</p> <h4 id="46-马赫数--amr-网格mach--grids">4.6 马赫数 + AMR 网格（Mach + Grids）</h4> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/mach_grids/plt01656-480.webp 480w,/assets/img/case4/mach_grids/plt01656-800.webp 800w,/assets/img/case4/mach_grids/plt01656-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/mach_grids/plt01656.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="马赫数+网格 plt01656 (t = 298.12 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/mach_grids/plt01661-480.webp 480w,/assets/img/case4/mach_grids/plt01661-800.webp 800w,/assets/img/case4/mach_grids/plt01661-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/mach_grids/plt01661.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="马赫数+网格 plt01661 (t = 299.03 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/mach_grids/plt01667-480.webp 480w,/assets/img/case4/mach_grids/plt01667-800.webp 800w,/assets/img/case4/mach_grids/plt01667-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/mach_grids/plt01667.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="马赫数+网格 plt01667 (t = 300.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 叠加 AMR 网格分块边界的马赫数关键帧对比（<code>298.12 ms</code> / <code>299.03 ms</code> / <code>300.00 ms</code>）。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/mach_grids/plt01667.png"> <source src="/assets/video/case4/movie_mach_grids.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 马赫数 + AMR 动态网格重构演化视频（0 → 300 ms）。 </div> <h4 id="47-压力--amr-网格pressure--grids">4.7 压力 + AMR 网格（Pressure + Grids）</h4> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/pressure_grids/plt01656-480.webp 480w,/assets/img/case4/pressure_grids/plt01656-800.webp 800w,/assets/img/case4/pressure_grids/plt01656-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/pressure_grids/plt01656.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力+网格 plt01656 (t = 298.12 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/pressure_grids/plt01661-480.webp 480w,/assets/img/case4/pressure_grids/plt01661-800.webp 800w,/assets/img/case4/pressure_grids/plt01661-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/pressure_grids/plt01661.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力+网格 plt01661 (t = 299.03 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/pressure_grids/plt01667-480.webp 480w,/assets/img/case4/pressure_grids/plt01667-800.webp 800w,/assets/img/case4/pressure_grids/plt01667-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/pressure_grids/plt01667.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="压力+网格 plt01667 (t = 300.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 叠加 AMR 网格分块边界的无量纲压力关键帧对比。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/pressure_grids/plt01667.png"> <source src="/assets/video/case4/movie_pressure_grids.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 压力场 + AMR 网格演化视频（0 → 300 ms）。 </div> <h4 id="48-密度--amr-网格density--grids">4.8 密度 + AMR 网格（Density + Grids）</h4> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/density_grids/plt01656-480.webp 480w,/assets/img/case4/density_grids/plt01656-800.webp 800w,/assets/img/case4/density_grids/plt01656-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/density_grids/plt01656.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="密度+网格 plt01656 (t = 298.12 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/density_grids/plt01661-480.webp 480w,/assets/img/case4/density_grids/plt01661-800.webp 800w,/assets/img/case4/density_grids/plt01661-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/density_grids/plt01661.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="密度+网格 plt01661 (t = 299.03 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/density_grids/plt01667-480.webp 480w,/assets/img/case4/density_grids/plt01667-800.webp 800w,/assets/img/case4/density_grids/plt01667-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/density_grids/plt01667.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="密度+网格 plt01667 (t = 300.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 叠加 AMR 网格分块边界的无量纲密度关键帧对比。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/density_grids/plt01667.png"> <source src="/assets/video/case4/movie_density_grids.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 密度场 + AMR 网格演化视频（0 → 300 ms）。 </div> <h4 id="49-温度--amr-网格temperature--grids">4.9 温度 + AMR 网格（Temperature + Grids）</h4> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/temperature_grids/plt01656-480.webp 480w,/assets/img/case4/temperature_grids/plt01656-800.webp 800w,/assets/img/case4/temperature_grids/plt01656-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/temperature_grids/plt01656.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度+网格 plt01656 (t = 298.12 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/temperature_grids/plt01661-480.webp 480w,/assets/img/case4/temperature_grids/plt01661-800.webp 800w,/assets/img/case4/temperature_grids/plt01661-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/temperature_grids/plt01661.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度+网格 plt01661 (t = 299.03 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/temperature_grids/plt01667-480.webp 480w,/assets/img/case4/temperature_grids/plt01667-800.webp 800w,/assets/img/case4/temperature_grids/plt01667-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/temperature_grids/plt01667.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="温度+网格 plt01667 (t = 300.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 叠加 AMR 网格分块边界的静温关键帧对比。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/temperature_grids/plt01667.png"> <source src="/assets/video/case4/movie_temperature_grids.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 温度场 + AMR 网格演化视频（0 → 300 ms）。 </div> <h4 id="410-数值纹影--amr-网格schlieren--grids">4.10 数值纹影 + AMR 网格（Schlieren + Grids）</h4> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/schlieren_grids/plt01656-480.webp 480w,/assets/img/case4/schlieren_grids/plt01656-800.webp 800w,/assets/img/case4/schlieren_grids/plt01656-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/schlieren_grids/plt01656.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影+网格 plt01656 (t = 298.12 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/schlieren_grids/plt01661-480.webp 480w,/assets/img/case4/schlieren_grids/plt01661-800.webp 800w,/assets/img/case4/schlieren_grids/plt01661-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/schlieren_grids/plt01661.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影+网格 plt01661 (t = 299.03 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/schlieren_grids/plt01667-480.webp 480w,/assets/img/case4/schlieren_grids/plt01667-800.webp 800w,/assets/img/case4/schlieren_grids/plt01667-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/schlieren_grids/plt01667.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="数值纹影+网格 plt01667 (t = 300.00 ms)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 叠加 AMR 网格分块边界的数值纹影关键帧对比：L3 绿色细网格完整包络尾迹强剪切层区域。 </div> <div class="row justify-content-sm-center mt-3"> <div class="col-sm-8"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/schlieren_grids/plt01667.png"> <source src="/assets/video/case4/movie_schlieren_grids.mp4" type="video/mp4"></source> </video> </div> </div> <div class="caption"> 数值纹影 + AMR 网格演化视频（0 → 300 ms）。 </div> <hr> <h3 id="c-首阶段全计算域-z--0-二维切片演化0--012-s">C. 首阶段全计算域 <code class="language-plaintext highlighter-rouge">z = 0</code> 二维切片演化（<code class="language-plaintext highlighter-rouge">0 → 0.12 s</code>）</h3> <div class="row"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/slices_z0/plt00660-480.webp 480w,/assets/img/case4/slices_z0/plt00660-800.webp 800w,/assets/img/case4/slices_z0/plt00660-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/slices_z0/plt00660.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="z=0 全域密度切片 plt00660" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/slices_z0/plt00666-480.webp 480w,/assets/img/case4/slices_z0/plt00666-800.webp 800w,/assets/img/case4/slices_z0/plt00666-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/slices_z0/plt00666.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="z=0 全域密度切片 plt00666" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/case4/slices_z0/plt00672-480.webp 480w,/assets/img/case4/slices_z0/plt00672-800.webp 800w,/assets/img/case4/slices_z0/plt00672-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/case4/slices_z0/plt00672.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="z=0 全域密度切片 plt00672 (t = 0.12 s)" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> </div> </div> <div class="caption"> 首阶段末期（<code>plt00660</code> / <code>plt00666</code> / <code>plt00672</code>，<code>t → 0.12 s</code>）<code>z = 0 cm</code> 全计算域切片三帧并列对比。 </div> <div class="row mt-3"> <div class="col-sm-4 mt-3 mt-md-0"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/mach_grids.png"> <source src="/assets/video/case4/slices_z0/movie_mach.mp4" type="video/mp4"></source> </video> <div class="caption">全域切片：马赫数（<code>movie_mach.mp4</code>）</div> </div> <div class="col-sm-4 mt-3 mt-md-0"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none"> <source src="/assets/video/case4/slices_z0/movie_pressure.mp4" type="video/mp4"></source> </video> <div class="caption">全域切片：压力（<code>movie_pressure.mp4</code>）</div> </div> <div class="col-sm-4 mt-3 mt-md-0"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none" poster="/assets/img/case4/slices_z0/plt00672.png"> <source src="/assets/video/case4/slices_z0/movie_density.mp4" type="video/mp4"></source> </video> <div class="caption">全域切片：密度（<code>movie_density.mp4</code>）</div> </div> </div> <div class="row mt-2"> <div class="col-sm-4 mt-3 mt-md-0"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none"> <source src="/assets/video/case4/slices_z0/movie_Temp.mp4" type="video/mp4"></source> </video> <div class="caption">全域切片：温度（<code>movie_Temp.mp4</code>）</div> </div> <div class="col-sm-4 mt-3 mt-md-0"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none"> <source src="/assets/video/case4/slices_z0/movie_x_velocity.mp4" type="video/mp4"></source> </video> <div class="caption">全域切片：<i>x</i> 向速度（<code>movie_x_velocity.mp4</code>）</div> </div> <div class="col-sm-4 mt-3 mt-md-0"> <video class="img-fluid rounded z-depth-1" style="width: 100%;" controls="" loop="" muted="" playsinline="" preload="none"> <source src="/assets/video/case4/slices_z0/movie_z_velocity.mp4" type="video/mp4"></source> </video> <div class="caption">全域切片：<i>z</i> 向速度（<code>movie_z_velocity.mp4</code>）</div> </div> </div> <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const videos = Array.from(document.querySelectorAll("video"));
+    videos.forEach((v) => {
+      v.addEventListener("play", () => {
+        videos.forEach((other) => {
+          if (other !== v && !other.paused) other.pause();
+        });
+      });
+    });
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting && !e.target.paused) e.target.pause();
+        });
+      }, { threshold: 0.1 });
+      videos.forEach((v) => io.observe(v));
+    }
+  });
+</script> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 xh g. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. <style>#navbar a.navbar-brand,#navbar a.navbar-brand span{font-size:0!important;line-height:0!important;}#navbar a.navbar-brand{display:inline-flex;align-items:center;}#navbar a.navbar-brand::after{content:"";display:inline-block;width:152px;height:34px;background:url("/assets/img/signature.png") no-repeat left center/contain;}html[data-theme="dark"] #navbar a.navbar-brand::after{filter:invert(1);}</style> </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script defer src="/assets/js/table-engine.js?v=c52129a997ab5b8a3622ec0506761421" type="text/javascript"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "projects",
+          description: "A growing collection of your cool projects.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "This is a description of the page. You can modify it in '_pages/cv.md'. You can also change or remove the top pdf download button.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-teaching",
+          title: "teaching",
+          description: "Course materials, schedules, and resources for classes taught.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/teaching/";
+          },
+        },{id: "nav-people",
+          title: "people",
+          description: "members of the lab or group",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/people/";
+          },
+        },{id: "dropdown-bookshelf",
+              title: "bookshelf",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/books/";
+              },
+            },{id: "dropdown-blog",
+              title: "blog",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/blog/";
+              },
+            },{id: "post-a-post-with-marimo-snippets",
+        
+          title: "a post with marimo snippets",
+        
+        description: "running Python in the browser with marimo",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/marimo/";
+          
+        },
+      },{id: "post-a-post-with-plotly-js",
+        
+          title: "a post with plotly.js",
+        
+        description: "this is what included plotly.js code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/plotly/";
+          
+        },
+      },{id: "post-a-post-with-image-galleries",
+        
+          title: "a post with image galleries",
+        
+        description: "this is what included image galleries could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/photo-gallery/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-a-post-with-tabs",
+        
+          title: "a post with tabs",
+        
+        description: "this is what included tabs in a post could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/tabs/";
+          
+        },
+      },{id: "post-a-post-with-typograms",
+        
+          title: "a post with typograms",
+        
+        description: "this is what included typograms code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/typograms/";
+          
+        },
+      },{id: "post-a-post-that-can-be-cited",
+        
+          title: "a post that can be cited",
+        
+        description: "this is what a post that can be cited looks like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/post-citation/";
+          
+        },
+      },{id: "post-a-post-with-pseudo-code",
+        
+          title: "a post with pseudo code",
+        
+        description: "this is what included pseudo code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/pseudocode/";
+          
+        },
+      },{id: "post-a-post-with-code-diff",
+        
+          title: "a post with code diff",
+        
+        description: "this is how you can display code diffs",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/code-diff/";
+          
+        },
+      },{id: "post-a-post-with-advanced-image-components",
+        
+          title: "a post with advanced image components",
+        
+        description: "this is what advanced image components could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/advanced-images/";
+          
+        },
+      },{id: "post-a-post-with-vega-lite",
+        
+          title: "a post with vega lite",
+        
+        description: "this is what included vega lite code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/vega-lite/";
+          
+        },
+      },{id: "post-a-post-with-geojson",
+        
+          title: "a post with geojson",
+        
+        description: "this is what included geojson code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/geojson-map/";
+          
+        },
+      },{id: "post-a-post-with-echarts",
+        
+          title: "a post with echarts",
+        
+        description: "this is what included echarts code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/echarts/";
+          
+        },
+      },{id: "post-a-post-with-chart-js",
+        
+          title: "a post with chart.js",
+        
+        description: "this is what included chart.js code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/chartjs/";
+          
+        },
+      },{id: "post-a-post-with-tikzjax",
+        
+          title: "a post with TikZJax",
+        
+        description: "this is what included TikZ code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/tikzjax/";
+          
+        },
+      },{id: "post-a-post-with-bibliography",
+        
+          title: "a post with bibliography",
+        
+        description: "an example of a blog post with bibliography",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/post-bibliography/";
+          
+        },
+      },{id: "post-a-post-with-jupyter-notebook",
+        
+          title: "a post with jupyter notebook",
+        
+        description: "an example of a blog post with jupyter notebook",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/jupyter-notebook/";
+          
+        },
+      },{id: "post-a-post-with-custom-blockquotes",
+        
+          title: "a post with custom blockquotes",
+        
+        description: "an example of a blog post with custom blockquotes",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/custom-blockquotes/";
+          
+        },
+      },{id: "post-a-post-with-table-of-contents-on-a-sidebar",
+        
+          title: "a post with table of contents on a sidebar",
+        
+        description: "an example of a blog post with table of contents on a sidebar",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/sidebar-table-of-contents/";
+          
+        },
+      },{id: "post-a-post-with-audios",
+        
+          title: "a post with audios",
+        
+        description: "this is what included audios could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/audios/";
+          
+        },
+      },{id: "post-a-post-with-videos",
+        
+          title: "a post with videos",
+        
+        description: "this is what included videos could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/videos/";
+          
+        },
+      },{id: "post-displaying-beautiful-interactive-tables",
+        
+          title: "displaying beautiful interactive tables",
+        
+        description: "an example of how to use interactive tables in al-folio",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/tables/";
+          
+        },
+      },{id: "post-a-post-with-table-of-contents",
+        
+          title: "a post with table of contents",
+        
+        description: "an example of a blog post with table of contents",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/table-of-contents/";
+          
+        },
+      },{id: "post-a-post-with-giscus-comments",
+        
+          title: "a post with giscus comments",
+        
+        description: "an example of a blog post with giscus comments",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/giscus-comments/";
+          
+        },
+      },{id: "post-یک-نوشتهٔ-راست-چین",
+        
+          title: "یک نوشتهٔ راست‌چین",
+        
+        description: "نمونه‌ای از پشتیبانی زبان‌های راست‌چین",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/rtl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-a-post-with-redirect",
+        
+          title: "a post with redirect",
+        
+        description: "you can also redirect to assets like pdf",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/assets/pdf/example_pdf.pdf";
+          
+        },
+      },{id: "post-a-post-with-diagrams",
+        
+          title: "a post with diagrams",
+        
+        description: "an example of a blog post with diagrams",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/diagrams/";
+          
+        },
+      },{id: "post-a-distill-style-blog-post",
+        
+          title: "a distill-style blog post",
+        
+        description: "an example of a distill-style blog post and main elements",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/distill/";
+          
+        },
+      },{id: "post-a-post-with-twitter",
+        
+          title: "a post with twitter",
+        
+        description: "an example of a blog post with twitter",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/twitter/";
+          
+        },
+      },{id: "post-a-post-with-disqus-comments",
+        
+          title: "a post with disqus comments",
+        
+        description: "an example of a blog post with disqus comments",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/disqus-comments/";
+          
+        },
+      },{id: "post-a-post-with-math",
+        
+          title: "a post with math",
+        
+        description: "an example of a blog post with some math",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/math/";
+          
+        },
+      },{id: "post-a-post-with-code",
+        
+          title: "a post with code",
+        
+        description: "an example of a blog post with some code",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/code/";
+          
+        },
+      },{id: "post-a-post-with-images",
+        
+          title: "a post with images",
+        
+        description: "this is what included images could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/images/";
+          
+        },
+      },{id: "post-a-post-with-formatting-and-links",
+        
+          title: "a post with formatting and links",
+        
+        description: "march & april, looking forward to summer",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/formatting-and-links/";
+          
+        },
+      },{id: "books-the-godfather",
+          title: 'The Godfather',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/the_godfather/";
+            },},{id: "news-a-simple-inline-announcement",
+          title: 'A simple inline announcement.',
+          description: "",
+          section: "News",},{id: "news-a-long-announcement-with-details",
+          title: 'A long announcement with details',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/announcement_2/";
+            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
+          title: 'A simple inline announcement with Markdown emoji! <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png" height="20" width="20"> <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">',
+          description: "",
+          section: "News",},{id: "projects-project-1",
+          title: 'project 1',
+          description: "with background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/1_project/";
+            },},{id: "projects-project-2",
+          title: 'project 2',
+          description: "a project with a background image and giscus comments",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/2_project/";
+            },},{id: "projects-project-3-with-very-long-name",
+          title: 'project 3 with very long name',
+          description: "a project that redirects to another website",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/3_project/";
+            },},{id: "projects-project-4",
+          title: 'project 4',
+          description: "another without an image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/4_project/";
+            },},{id: "projects-project-5",
+          title: 'project 5',
+          description: "a project with a background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/5_project/";
+            },},{id: "projects-project-6",
+          title: 'project 6',
+          description: "a project with no image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/6_project/";
+            },},{id: "projects-project-7",
+          title: 'project 7',
+          description: "with background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/7_project/";
+            },},{id: "projects-project-8",
+          title: 'project 8',
+          description: "an other project with a background image and giscus comments",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/8_project/";
+            },},{id: "projects-project-9",
+          title: 'project 9',
+          description: "another project with an image 🎉",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/9_project/";
+            },},{id: "projects-case-3-火箭-30-km-ma-5-gpu-仿真",
+          title: 'Case 3: 火箭 30 km / Ma 5 GPU 仿真',
+          description: "60° 舵面高超声速流场仿真、AMR 显存诊断调优（inputs2 → inputs3）与激波演化展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/case3/";
+            },},{id: "projects-case-4-火箭-10-km-ma-1-0-跨声速仿真",
+          title: 'Case 4: 火箭 10 km / Ma 1.0 跨声速仿真',
+          description: "60° 舵面跨声速气动仿真、AMR 显存分析、chk00672 断点续算与网格叠加流场展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/case4/";
+            },},{id: "projects-case-5-火箭-1-km-ma-0-3-gpu-仿真",
+          title: 'Case 5: 火箭 1 km / Ma 0.3 GPU 仿真',
+          description: "60° 舵面 AMReX-CNS 气动仿真、AMR 加密策略与 1.5 s 全流场演化展示",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/case5/";
+            },},{id: "teachings-data-science-fundamentals",
+          title: 'Data Science Fundamentals',
+          description: "This course covers the foundational aspects of data science, including data collection, cleaning, analysis, and visualization. Students will learn practical skills for working with real-world datasets.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/data-science-fundamentals/";
+            },},{id: "teachings-introduction-to-machine-learning",
+          title: 'Introduction to Machine Learning',
+          description: "This course provides an introduction to machine learning concepts, algorithms, and applications. Students will learn about supervised and unsupervised learning, model evaluation, and practical implementations.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/introduction-to-machine-learning/";
+            },},{
+        id: 'social-cv',
+        title: 'CV',
+        section: 'Socials',
+        handler: () => {
+          window.open("/assets/pdf/example_pdf.pdf", "_blank");
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%79%6F%75@%65%78%61%6D%70%6C%65.%63%6F%6D", "_blank");
+        },
+      },{
+        id: 'social-inspire',
+        title: 'Inspire HEP',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://inspirehep.net/authors/1010907", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+        id: 'social-scholar',
+        title: 'Google Scholar',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://scholar.google.com/citations?user=qc6CJjYAAAAJ", "_blank");
+        },
+      },{
+        id: 'social-custom_social',
+        title: 'Custom_social',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.alberteinstein.com/", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>
